@@ -9,9 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-//Inspired by https://o7planning.org/en/10603/spring-mvc-security-and-spring-jdbc-tutorial
-
-
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 {
@@ -35,10 +32,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
         http.csrf().disable();
 
         //Free pages
-        http.authorizeRequests().antMatchers("/login","/logout","/fail").permitAll();
+        http.authorizeRequests().antMatchers("/login", "/logout", "/fail").permitAll();
 
         //Can be accessed by both
-        http.authorizeRequests().antMatchers("/course").access("isAuthenticated()");
+        http.authorizeRequests().antMatchers("/course", "/home", "/").access("isAuthenticated()");
                 //access("hasAnyAuthority('Administrator','student','teacher')");
 
         //For admin only
