@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Course Details</title>
+    <link href="/CSS/kartotek_style.css" rel="stylesheet">
+</head>
+<body>
+    <th:block th:include="_navigation"></th:block>
+
+    <div class="container">
+        <header>
+            <h1>Course Details</h1>
+        </header>
+
+        <section>
+            <div class="container1">
+                <p><strong>Danish Name:</strong></p>
+                <p th:text="${course.nameDanish}"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>English Name:</strong></p>
+                <p th:text="${course.nameEnglish}"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Semester:</strong></p>
+                <p th:text="${course.semester}"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Study Programme:</strong></p>
+                <p th:text="${course.studyProgramme}"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Mandatory:</strong></p>
+                <p th:text="${course.mandatory}"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>ECTS Points:</strong></p>
+                <p th:text="${course.ECTS}"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Language:</strong></p>
+                <p th:text="${course.language}"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Minimum Students:</strong></p>
+                <p th:text="${course.minimumStudents}"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Expected Students:</strong></p>
+                <p th:text="${course.expectedStudents}"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Maximum Students:</strong></p>
+                <p th:text="${course.maximumStudents}"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Prerequisites:</strong></p>
+                <p th:text="${course.prerequisites}"></p>
+            </div>
+            <br>
+            <div class="container1">
+                 <p><strong>Learning Outcome:</strong></p>
+                 <p th:text="${course.learningOutcome}"></p>
+            </div>
+            <br>
+            <div class="container1">
+                 <p><strong>Content:</strong></p>
+                 <p th:text="${course.content}"></p>
+            </div>
+            <br>
+            <div class="container1">
+                  <p><strong>Learning Activites:</strong></p>
+                  <p th:text="${course.learningActivities}"></p>
+            </div>
+            <br>
+            <div class="container1">
+                  <p><strong>Exam form:</strong></p>
+                  <p th:text="${course.examForm}"></p>
+            </div>
+            <br>
+            <div>
+                <a type="button" href="/course/" class="btn btn-del btn:hover">Return</a>
+                <a type="button" href="/course/edit" class="btn btn-ed btn:hover">Edit</a>
+                <a type="button" href="/course/signup" class="btn btn-create btn:hover">Sign Up</a>
+            </div>
+        </section>
+        <br>
+        <br>
+        <footer>
+            <th:block th:include="_footer"></th:block>
+        </footer>
+    </div>
+</body>
+</html>

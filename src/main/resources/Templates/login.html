@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xlmns:th="http://www.thymeleaf.org"
+      xmlns:xlmns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Enggården's Venner - Login</title>
+    <link href="/CSS/login_style.css" rel="stylesheet">
+</head>
+    <body>
+        <div th:if="${param.error}">
+            <label style="color:red">Invalid username and password.</label>
+        </div>
+        <div th:if="${param.logout}">
+            <label>
+                You have been logged out.
+            </label>
+        </div>
+        <header class="header1">
+            <img src="/Image/kea logo.png" alt="Enggårdens logo" class="logo-img">
+            <div class="margin">
+                <p>Indtast venligst brugernavn og adgangskode nedenfor.</p>
+            </div>
+
+
+        </header>
+
+        <div class="login-page">
+          <div class="form">
+            <form th:action="@{/login}" method="post" class="login-form">
+              <input type="text" name="username" placeholder="Brugernavn"/>
+              <input type="password" name="password" placeholder="Adgangskode"/>
+              <button type="submit">log Ind</button>
+            </form>
+          </div>
+        </div>
+    </body>
+</html>

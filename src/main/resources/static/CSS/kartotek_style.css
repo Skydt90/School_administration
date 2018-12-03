@@ -1,0 +1,244 @@
+/*
+Body elements
+*/
+.centered {
+    margin:50px auto;
+    text-align:center;
+}
+body
+{
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.container
+{
+    width: 1024px;
+    margin: 0 auto;
+}
+nav
+{
+    background-color: #222;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+nav a
+{
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    position: relative;
+    left: 22.5%;
+}
+footer {
+    padding-top: 20px;
+    padding-right: 5px;
+    text-align: right;
+    color: #666666;
+    font-style: italic;
+}
+
+/*
+ Christian
+*/
+
+.error {color:red}
+
+nav a:hover
+{
+    color: lightblue;
+}
+.container1 p, b, input
+{
+    display: inline;
+}
+
+.header1
+{
+    text-align: center;
+    font-size: large;
+}
+.floatRight{
+    float: right;
+}
+
+/*
+Image Styles
+By Christian
+ */
+
+body .main-image {
+    display: block;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 700px;
+    height: 500px;
+    border-radius: 5%;
+    border: 1px solid white;
+    transition: all .9s;
+}
+body .main-image:hover {
+    transform: scale(1.01) rotate(.1deg);
+}
+
+.main-image {
+    border: 1px solid black;
+    border-radius: 3%;
+}
+
+.logo-img{
+}
+
+#logo {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.mail-container {
+    display: inline-block;
+    margin-left: inherit;
+    margin-right: 15%;
+    width: 60px;
+}
+
+.mail-image {
+    width: 100%;
+    transition: all .9s;
+}
+
+.mail-image:hover{
+    transform: scale(1.03) rotate(5deg);
+}
+
+.mail-image-text {
+    text-align: justify;
+
+}
+
+/*
+Table Styles
+ */
+
+/* https://www.w3schools.com/html/html_tables.asp */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+td, th {
+    border: 1px solid dimgray;
+    /* border-radius: .25rem; */
+    text-align: left;
+    padding: 5px 8px 5px 8px;
+}
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+input {
+    display: block;
+    width: 40%;
+    padding: .3rem .50rem;
+    font-size: 1rem;
+    line-height: 1;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid dimgrey;
+}
+
+#submit {
+    width: 10%;
+}
+select {
+    display: block;
+    width: 41.8%;
+    padding: .3rem .50rem;
+    font-size: 1rem;
+    line-height: 1;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid dimgrey;
+    /*border-radius: .25rem;*/
+}
+
+/*
+By Christian
+*/
+
+input::placeholder {
+    font-style:italic;
+}
+
+/*Hover effect on table*/
+table th:hover{
+    background: #dddddd;
+    transition: all;
+}
+
+tr:nth-child(odd):hover {
+    background-color: lightblue;
+    transition: all;
+}
+
+tr:nth-child(even):hover {
+    background-color: lightblue;
+    transition: all;
+}
+
+/* Buttons */
+.btn {
+    background-color: #4CAF50; /* Green */
+    border: 1px solid dimgray;
+    color: white;
+    padding: 7px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 5px; /* https://www.w3schools.com/css/css3_borders.asp */
+    box-shadow: 1px 1px 1px #888888;
+    -webkit-transition-duration: 0.1s; /* Safari */
+    transition-duration: 0.1s;
+}
+
+.btn-logout {
+    background-color: #4CAF50; /* Green */
+    border: 1px solid black;
+    color: white;
+    padding: 7px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 5px; /* https://www.w3schools.com/css/css3_borders.asp */
+    -webkit-transition-duration: 0.1s; /* Safari */
+    transition-duration: 0.1s;
+    background-color: #f44336;
+}
+
+.btn-logout:hover{
+    color:black;
+}
+
+.btn-width {
+    width: 15%;
+}
+.btn-create {
+    background-color: #4CAF50;
+}
+.btn-mail{
+    background-color: orange;
+}
+.btn-details {
+    background-color: #4CAF50;
+}
+.btn-ed {
+    background-color: #008CBA;
+}
+.btn-del {
+    background-color: #f44336;
+}
+.btn:hover {
+    box-shadow: 2px 2px 2px #888888;
+}
