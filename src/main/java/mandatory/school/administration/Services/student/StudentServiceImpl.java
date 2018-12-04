@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class StudentServiceImpl implements StudentService
@@ -22,7 +23,7 @@ public class StudentServiceImpl implements StudentService
     @Override
     public Student findStudentById(int id)
     {
-        return repository.findById(id).get();
+        return repository.getOne(id);
     }
 
     @Override
@@ -47,6 +48,12 @@ public class StudentServiceImpl implements StudentService
     public List<Student> getAllStudents()
     {
         return repository.findAll();
+    }
+
+    @Override
+    public Set<Student> getAllByCourseId(int courseId)
+    {
+        return repository.findAllByStudentCourses_courseId(courseId);
     }
 
     @Override

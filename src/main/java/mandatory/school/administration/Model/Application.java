@@ -4,52 +4,60 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "applications")
-public class Application
+public class Application implements Serializable
 {
-    @EmbeddedId
-    private ApplicationId applicationId;
+    private Student student;
+    private Course course;
+    private Date timestamp;
+
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    public Student getStudent()
+    {
+        return student;
+    }
+    public void setStudent(Student student)
+    {
+        this.student = student;
+    }
+
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    public Course getCourse()
+    {
+        return course;
+    }
+    public void setCourse(Course course)
+    {
+        this.course = course;
+    }
 
     @NotNull(message = "is required")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date timestamp;
-
-    @MapsId("student_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    Student student;
-
-    @MapsId("course_id")
-    @ManyToOne (fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Course course;
-
-    public Application() {}
-
-    public Application(ApplicationId applicationId, @NotNull(message = "is required") Date timestamp)
-    {
-        this.applicationId = applicationId;
-        this.timestamp = timestamp;
-    }
-
-    public ApplicationId getApplicationId()
-    {
-        return applicationId;
-    }
-
-    public void setApplicationId(ApplicationId applicationId)
-    {
-        this.applicationId = applicationId;
-    }
-
     public Date getTimestamp()
     {
         return timestamp;
     }
-
     public void setTimestamp(Date timestamp)
     {
         this.timestamp = timestamp;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Application{" +
+                "studentId=" + student.getId() +
+                ", courseId=" + course.getId() +
+                ", timestamp=" + timestamp +
+
+                '}';
     }
 }

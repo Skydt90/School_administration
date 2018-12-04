@@ -5,58 +5,30 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "students")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Student
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @NotNull(message = "is required")
-    @Size(min = 2, max = 25)
-    @Pattern(regexp = "[a-zA-ZæÆøØåÅ]+$", message = "Only characters allowed")
-    @Column(name = "name")
-    @JsonProperty("name")
     private String name;
 
-    @NotNull(message = "is required")
-    @Size(min = 3, max = 20)
-    @Column(name = "username")
-    @JsonProperty("username")
-    private String username;
-
-    @Email
-    @Size(min = 3, max = 20)
-    @Column(name = "email")
-    @JsonProperty("email")
-    private String email;
-
-    @NotNull(message = "is required")
-    @Size(min = 3, max = 20)
-    @Column(name = "password")
-    @JsonProperty("password")
-    private String password;
-
-    @Min(value = 0, message = "must be either 0 or 1")
-    @Max(value = 1, message = "must be either 0 or 1")
-    @Column(name = "enabled")
-    @JsonProperty("enabled")
-    private int enabled;
+    private User user;
+    private Set<StudentCourse> studentCourses;
+    private Set<Application> applications;
 
     public Student(){}
 
-    public Student(@NotNull(message = "is required") @Size(min = 2, max = 25) @Pattern(regexp = "[a-zA-ZæÆøØåÅ]+$", message = "Only characters allowed") String name, @NotNull(message = "is required") @Size(min = 3, max = 20) String username, @Email @NotNull(message = "is required") @Size(min = 3, max = 20) String email, @NotNull(message = "is required") @Size(min = 3, max = 20) String password, @Min(value = 0, message = "must be either 0 or 1") @Max(value = 1, message = "must be either 0 or 1") int enabled)
+    public Student(int id, String name)
     {
+        this.id = id;
         this.name = name;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.enabled = enabled;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public int getId()
     {
         return id;
@@ -67,66 +39,57 @@ public class Student
         this.id = id;
     }
 
+    @NotNull(message = "is required")
+    @Size(min = 2, max = 25)
+    @Pattern(regexp = "[a-zA-ZæÆøØåÅ]+$", message = "Only characters allowed")
+    @Column(name = "name")
+    @JsonProperty("name")
     public String getName()
     {
         return name;
     }
-
     public void setName(String name)
     {
         this.name = name;
     }
 
-    public String getUsername()
+    @ManyToOne
+    @JoinColumn(name = "username")
+    public User getUser()
     {
-        return username;
+        return user;
+    }
+    public void setUser(User user)
+    {
+        this.user = user;
     }
 
-    public void setUsername(String username)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    public Set<StudentCourse> getStudentCourses()
     {
-        this.username = username;
+        return studentCourses;
+    }
+    public void setStudentCourses(Set<StudentCourse> studentCourses)
+    {
+        this.studentCourses = studentCourses;
     }
 
-    public String getEmail()
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    public Set<Application> getApplications()
     {
-        return email;
+        return applications;
     }
-
-    public void setEmail(String email)
+    public void setApplications(Set<Application> applications)
     {
-        this.email = email;
-    }
-
-    public String getPassword()
-    {
-        return password;
-    }
-
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
-
-    public int getEnabled()
-    {
-        return enabled;
-    }
-
-    public void setEnabled(int enabled)
-    {
-        this.enabled = enabled;
+        this.applications = applications;
     }
 
     @Override
     public String toString()
     {
-        return "student{" +
+        return "Student{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", enabled=" + enabled +
                 '}';
     }
 }

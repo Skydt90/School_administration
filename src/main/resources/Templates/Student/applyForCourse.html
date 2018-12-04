@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Student Apply for Course</title>
+    <link href="/CSS/kartotek_style.css" rel="stylesheet">
+    <script src="https://kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+</head>
+<body>
+    <th:block th:include="_navigation"></th:block>
+
+    <div class="container">
+        <header>
+            <h1>Student Apply for Course</h1>
+        </header>
+
+        <a type="button" href="/student" class="btn btn-create btn:hover">Return</a>
+        <p th:text="'Total Amount of Courses:' + ' ' + ${count}"></p>
+
+        <p></p>
+        <table class="sortable" id="table">
+            <thead>
+            <tr>
+                <th>Danish Name</th>
+                <th>English Name</th>
+                <th>ECTS Points</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="course: ${courses}">
+                <td th:text="${course.nameDanish}"></td>
+                <td th:text="${course.nameEnglish}"></td>
+                <td th:text="${course.ECTS}"></td>
+                <td>
+                    <a th:href="${'/course/details?id='+course.id}" type="button" class="btn btn-ed btn:hover">Details</a>
+                    <a th:href="${'/student/signUp?studentId=' + student.id + '&courseId=' + course.id}" type="button" class="btn btn-ed btn:hover">Details</a>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <footer>
+            <th:block th:include="_footer"></th:block>
+        </footer>
+        <br>
+        <br>
+    </div>
+</body>
+</html>

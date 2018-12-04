@@ -22,5 +22,7 @@ public interface CourseService
 
     List<Course> getAllCoursesLegacy();
 
+    List<Course> getAllByStudentId(int studentId);
+
     long countCourses();
 }

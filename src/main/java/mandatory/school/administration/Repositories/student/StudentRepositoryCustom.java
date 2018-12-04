@@ -5,6 +5,5 @@ import mandatory.school.administration.Model.Student;
 public interface StudentRepositoryCustom
 {
     Student[] getStudentLegacy();
-
     Student postStudentLegacy(Student student);
 }

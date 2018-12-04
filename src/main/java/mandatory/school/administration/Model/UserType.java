@@ -3,25 +3,27 @@ package mandatory.school.administration.Model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Entity
 @Table(name = "usertypes")
 public class UserType
 {
-    @Id
-    @NotNull
-    @Size(max = 13)
-    @Column(name = "user_type")
     private String userType;
+
+    private Set<User> users;
 
     public UserType()
     {}
 
-    public UserType(@NotNull @Size(max = 13) String userType)
+    public UserType(String userType)
     {
         this.userType = userType;
     }
 
+    @Id
+    //@Size(max = 13)
+    @Column(name = "user_type")
     public String getUserType()
     {
         return userType;
@@ -32,12 +34,22 @@ public class UserType
         this.userType = userType;
     }
 
+    @OneToMany(mappedBy = "userType", cascade = CascadeType.ALL, orphanRemoval = true)
+    public Set<User> getUsers()
+    {
+        return users;
+    }
+
+    public void setUsers(Set<User> users)
+    {
+        this.users = users;
+    }
+
     @Override
     public String toString()
     {
         return "UserType{" +
                 "userType='" + userType + '\'' +
-                ", users=" +
                 '}';
     }
 }

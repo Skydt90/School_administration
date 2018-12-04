@@ -31,7 +31,7 @@ public class CourseServiceImpl implements CourseService
     @Override
     public Course findCourseById(int id)
     {
-        return repository.findById(id).get();
+        return repository.getOne(id);
     }
 
     @Override
@@ -62,6 +62,12 @@ public class CourseServiceImpl implements CourseService
     public List<Course> getAllCoursesLegacy()
     {
         return new ArrayList<>(Arrays.asList(repository.getCoursesLegacy()));
+    }
+
+    @Override
+    public List<Course> getAllByStudentId(int studentId)
+    {
+        return repository.findAllByStudentCourses_studentId(studentId);
     }
 
     @Override

@@ -8,44 +8,29 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Entity
 @Table(name = "teachers")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Teacher
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @NotNull(message = "is required")
-    @Size(min = 2, max = 50)
-    @Pattern(regexp = "[a-zA-ZæÆøØåÅ]+$", message = "Only characters allowed")
-    @Column(name = "name")
-    @JsonProperty("name")
     private String name;
 
-    @Email
-    @NotNull(message = "is required")
-    @Size(min = 3, max = 20)
-    @Column(name = "email")
-    @JsonProperty("email")
-    private String email;
-
-    @NotNull(message = "is required")
-    @Size(min = 3, max = 20)
-    @Column(name = "username")
-    private String username;
+    private User user;
+    private Set<TeacherCourse> teacherCourses;
 
     public Teacher(){}
 
-    public Teacher(@NotNull(message = "is required") @Size(min = 2, max = 50) @Pattern(regexp = "[a-zA-ZæÆøØåÅ]+$", message = "Only characters allowed") String name, @Email @NotNull(message = "is required") @Size(min = 3, max = 20) String email, @NotNull(message = "is required") @Size(min = 3, max = 20) String username)
+    public Teacher(int id, String name)
     {
+        this.id = id;
         this.name = name;
-        this.email = email;
-        this.username = username;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public int getId()
     {
         return id;
@@ -56,6 +41,11 @@ public class Teacher
         this.id = id;
     }
 
+    @NotNull(message = "is required")
+    @Size(min = 2, max = 50)
+    @Pattern(regexp = "[a-zA-ZæÆøØåÅ]+$", message = "Only characters allowed")
+    @Column(name = "name")
+    @JsonProperty("name")
     public String getName()
     {
         return name;
@@ -66,23 +56,34 @@ public class Teacher
         this.name = name;
     }
 
-    public String getEmail()
+    @ManyToOne
+    @JoinColumn(name = "username")
+    public User getUser()
     {
-        return email;
+        return user;
+    }
+    public void setUser(User user)
+    {
+        this.user = user;
     }
 
-    public void setEmail(String email)
+
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+    public Set<TeacherCourse> getTeacherCourses()
     {
-        this.email = email;
+        return teacherCourses;
+    }
+    public void setTeacherCourses(Set<TeacherCourse> teacherCourses)
+    {
+        this.teacherCourses = teacherCourses;
     }
 
-    public String getUsername()
+    @Override
+    public String toString()
     {
-        return username;
-    }
-
-    public void setUsername(String username)
-    {
-        this.username = username;
+        return "Teacher{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

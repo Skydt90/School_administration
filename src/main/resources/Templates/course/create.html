@@ -11,7 +11,7 @@
             <h1>Create Course</h1>
         </header>
 
-        <a type="button" href="/course/" class="btn btn-del btn:hover">Return</a>
+        <a type="button" href="/course" class="btn btn-del btn:hover">Return</a>
         <br>
         <br>
         <form th:action="@{/course/create}" th:object="${course}" method="post">
@@ -19,10 +19,6 @@
                 <b>Danish Name:</b>
                 <input type="text" th:field="${course.nameDanish}" />
                 <div th:if="${#fields.hasErrors('nameDanish')}" class="error" th:errors="*{nameDanish}"></div>
-                <br>
-                <b>Number of teachers:</b>
-                <input type="number" th:field="${course.numberOfTeachers}" />
-                <div th:if="${#fields.hasErrors('numberOfTeachers')}" class="error" th:errors="*{numberOfTeachers}"></div>
                 <br>
                 <b>English Name:</b>
                 <input type="text" th:field="${course.nameEnglish}" />
@@ -86,6 +82,10 @@
                 <b>Exam form:</b>
                 <input type="text" th:field="${course.examForm}" />
                 <div th:if="${#fields.hasErrors('examForm')}" class="error" th:errors="*{examForm}"></div>
+                <b>Number of teachers:</b>
+                <input type="number" th:field="${course.numberOfTeachers}" />
+                <div th:if="${#fields.hasErrors('numberOfTeachers')}" class="error" th:errors="*{numberOfTeachers}"></div>
+                <br>
             </section>
             <br>
             <a href="/course" type="button" class="btn btn-del btn:hover">Cancel</a>

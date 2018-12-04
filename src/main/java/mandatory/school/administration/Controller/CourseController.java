@@ -1,8 +1,7 @@
 package mandatory.school.administration.Controller;
 
-import mandatory.school.administration.Model.Course;
-import mandatory.school.administration.Services.teacherCourse.TeacherCourseService;
-import mandatory.school.administration.Services.studentCourse.StudentCourseService;
+import mandatory.school.administration.Model.*;
+import mandatory.school.administration.Services.student.StudentService;
 import mandatory.school.administration.Services.teacher.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,25 +20,28 @@ public class CourseController
     @Autowired
     CourseService courseService;
     @Autowired
-    StudentCourseService studentCourseService;
-    @Autowired
     TeacherService teacherService;
     @Autowired
-    TeacherCourseService teacherCourseService;
+    StudentService studentService;
 
     @GetMapping()
     public String overview(Model model)
     {
-        List<Course> courses = courseService.getAllCoursesLegacy();
+        //List<Course> courses = courseService.getAllCoursesLegacy();
+        List<Course> courses = courseService.getAllCourses();
         model.addAttribute("courses", courses);
         model.addAttribute("count", courses.size());
+
         return "/course/overview";
     }
 
     @GetMapping("/details")
     public String details(Model model, @RequestParam int id)
     {
-        model.addAttribute("course", courseService.findCourseById(id));
+        Course course = courseService.findCourseById(id);
+        model.addAttribute("course", course);
+        model.addAttribute("students", studentService.getAllByCourseId(id));
+        model.addAttribute("teachers", teacherService.getAllByCourseId(id));
         return "/course/details";
     }
 
@@ -59,20 +61,45 @@ public class CourseController
         }
         courseService.createCourseLegacy(course);
         courseService.createCourse(course);
+        return "redirect:/course/details?id=" + course.getId();
+    }
+
+    @GetMapping("/edit")
+    public String edit(Model model, @RequestParam int courseId)
+    {
+        model.addAttribute("course", courseService.findCourseById(courseId));
+        return "/course/edit";
+    }
+
+    @PostMapping("/edit")
+    public String edit(@Valid @ModelAttribute Course course, BindingResult bindingResult)
+    {
+        if (bindingResult.hasErrors())
+        {
+            return "/course/details?id=" + course.getId();
+        }
+        courseService.createCourseLegacy(course);
+        courseService.editCourse(course);
         return "redirect:/course";
     }
 
-    @PostMapping("/signup")
-    public String signup(@RequestParam int studentId, @RequestParam int courseId)
+    @GetMapping("/removeStudent")
+    public String removeStudent (@RequestParam int courseId, @RequestParam int studentId)
     {
-        studentCourseService.add(studentId, courseId);
-        return "redirect:/course";
+        Course course = courseService.findCourseById(courseId);
+        StudentCourse studentCourse = course.getStudentCourseByStudentIdAndCourseId(studentId, courseId);
+        course.getStudentCourses().remove(studentCourse);
+        courseService.editCourse(course);
+        return "redirect:/course/details?id=" + courseId;
     }
 
-    @DeleteMapping("/removeSignup")
-    public String removeSignup(@RequestParam int studentId, int courseId)
+    @GetMapping("/removeTeacher")
+    public String removeTeacher (@RequestParam int courseId, @RequestParam int teacherId, Model model)
     {
-        studentCourseService.remove(studentId, courseId);
-        return "redirect:/course";
+        Course course = courseService.findCourseById(courseId);
+        TeacherCourse teacherCourse = course.getTeacherCourseByTeacherIdAndCourseId(teacherId, courseId);
+        course.getTeacherCourses().remove(teacherCourse);
+        courseService.editCourse(course);
+        return "redirect:/course/details?id=" + courseId;
     }
 }

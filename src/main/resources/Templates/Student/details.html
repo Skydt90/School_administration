@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Student Details</title>
+    <link href="/CSS/kartotek_style.css" rel="stylesheet">
+</head>
+<body>
+    <th:block th:include="_navigation"></th:block>
+
+    <div class="container">
+        <header>
+            <h1>Student Details</h1>
+        </header>
+
+        <section>
+            <div>
+                <a type="button" th:href="${'/student/applyForNewCourse?studentId=' + student.id}" class="btn btn-del btn:hover">Sign Up for new Course</a>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Danish Name:</strong></p>
+                <p th:text="${student.name}"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Username:</strong></p>
+                <p th:text="${student.user.username}"></p>
+            </div>
+            <div class="container1">
+                <p><strong>Password:</strong></p>
+                <p th:text="${student.user.password}"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Type:</strong></p>
+                <p th:text="${student.user.usertype.usertype}"></p>
+            </div>
+
+            <div>
+                <h1>Enrolled Courses</h1>
+                <p></p>
+                <a type="button" href="/course/addStudent" class="btn btn-create btn:hover">Add</a>
+                <p></p>
+                <table class="sortable" id="tableStudents">
+                    <thead>
+                    <tr>
+                        <th>Name Danish</th>
+                        <th>Name English</th>
+                        <th>ECTS</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="course: ${courses}">
+                        <td th:text="${course.nameDanish}"></td>
+                        <td th:text="${course.nameEnglish}"></td>
+                        <td th:text="${course.ECTS}"></td>
+
+                        <td>
+                            <a th:href="${'/course/details?id='+course.id}" type="button" class="btn btn-ed btn:hover">Details</a>
+                            <a th:href="${'/student/removeStudent?courseId=' + course.id + '&studentId=' + student.id}" type="button" class="btn btn-del btn:hover">Remove</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table><br>
+            </div>
+        </section>
+        <br>
+        <br>
+        <footer>
+            <th:block th:include="_footer"></th:block>
+        </footer>
+    </div>
+</body>
+</html>

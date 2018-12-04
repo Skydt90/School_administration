@@ -13,6 +13,11 @@
         </header>
 
         <section>
+            <div>
+                <a type="button" href="/course/" class="btn btn-del btn:hover">Return</a>
+                <a type="button" href="/course/edit" class="btn btn-del btn:hover">Edit</a>
+            </div>
+            <br>
             <div class="container1">
                 <p><strong>Danish Name:</strong></p>
                 <p th:text="${course.nameDanish}"></p>
@@ -88,10 +93,66 @@
                   <p th:text="${course.examForm}"></p>
             </div>
             <br>
+
             <div>
-                <a type="button" href="/course/" class="btn btn-del btn:hover">Return</a>
-                <a type="button" href="/course/edit" class="btn btn-ed btn:hover">Edit</a>
-                <a type="button" href="/course/signup" class="btn btn-create btn:hover">Sign Up</a>
+                <h1>Registered Students</h1>
+                <p></p>
+                <a type="button" href="/course/addStudent" class="btn btn-create btn:hover">Add</a>
+                <p></p>
+                <table class="sortable" id="tableStudents">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Password</th>
+                        <th>User Type</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="student: ${students}">
+                        <td th:text="${student.name}"></td>
+                        <td th:text="${student.user.username}"></td>
+                        <td th:text="${student.user.password}"></td>
+                        <td th:text="${student.user.userType.userType}"></td>
+
+                        <td>
+                            <a th:href="${'/student/details?id='+student.id}" type="button" class="btn btn-ed btn:hover">Details</a>
+                            <a th:href="${'/course/removeStudent?courseId=' + course.id + '&studentId=' + student.id}" type="button" class="btn btn-del btn:hover">Remove</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table><br>
+            </div>
+
+            <div>
+                <h1>Registered Teachers</h1>
+                <p></p>
+                <a type="button" href="/course/addTeacher" class="btn btn-create btn:hover">Add</a>
+                <p></p>
+                <table class="sortable" id="tableTeachers">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Password</th>
+                        <th>user Type</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="teacher: ${teachers}">
+                        <td th:text="${teacher.name}"></td>
+                        <td th:text="${teacher.user.username}"></td>
+                        <td th:text="${teacher.user.password}"></td>
+                        <td th:text="${teacher.user.userType.userType}"></td>
+                        <td>
+                            <a th:href="${'/teacher/details?id='+teacher.id}" type="button" class="btn btn-ed btn:hover">Details</a>
+                            <a th:href="${'/course/removeTeacher?courseId=' + course.id + '&teacherId=' + teacher.id}" type="button" class="btn btn-del btn:hover">Remove</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table><br>
             </div>
         </section>
         <br>

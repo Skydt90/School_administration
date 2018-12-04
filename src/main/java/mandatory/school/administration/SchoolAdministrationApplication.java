@@ -1,48 +1,71 @@
 package mandatory.school.administration;
 
+import mandatory.school.administration.Controller.CourseController;
+import mandatory.school.administration.Model.*;
+import mandatory.school.administration.Repositories.UsertypeRepository;
+import mandatory.school.administration.Repositories.course.CourseRepository;
+import mandatory.school.administration.Repositories.student.StudentRepository;
+import mandatory.school.administration.Repositories.teacher.TeacherRepository;
+import mandatory.school.administration.Repositories.user.UserRepository;
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import javax.management.Query;
+import javax.transaction.Transactional;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+
 @SpringBootApplication
-public class SchoolAdministrationApplication
+public class SchoolAdministrationApplication implements CommandLineRunner
 {
     private static final Logger LOG = LoggerFactory.getLogger("LOG");
 
 
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    UsertypeRepository usertypeRepository;
+    @Autowired
+    StudentRepository studentRepository;
+    @Autowired
+    TeacherRepository teacherRepository;
+    @Autowired
+    CourseRepository courseRepository;
+    @Autowired
+    CourseController courseController;
 
     public static void main(String[] args)
     {
         SpringApplication.run(SchoolAdministrationApplication.class, args);
     }
 
-    /*
+
     @Override
-    public void run(String... wohoo)
+    @Transactional
+    public void run(String... strings) throws Exception
     {
-        // CRUD
+        Course course = courseRepository.getOne(3);
+        Teacher teacher = teacherRepository.getOne(2);
 
-        user user = userService.createUser(new user("MrPieler", "SygKode", "student"));
-        LOG.info("user created in DB : {} ", user);
+        TeacherCourse teacherCourse = course.getTeacherCourseByTeacherIdAndCourseId(teacher.getId(), course.getId());
 
-        student student1 = service.createStudent(new student("Mikkel", "Pieler", "MrPieler"));
-        LOG.info("student created in DB : {} ", student1);
-        LOG.info("Current students in DB : {}", service.countStudents());
-
+        course.getTeacherCourses().remove(teacherCourse);
         /*
-        student dbStudent = service.findStudentById(1);
-        LOG.info("student read from DB : {}", dbStudent);
+        System.out.println(course);
+        System.out.println(student);
 
-        student1.setName("JakobErDetNyeBlå");
-        service.editStudent(student1);
-        LOG.info("Changed student1 name: {}", student1);
+        Application application = new Application();
+        application.setStudent(student);
+        application.setCourse(course);
+        application.setTimestamp(new Date());
 
-        service.deleteStudent(student1);
-        LOG.info("Deleted student1 : {}", student1);
-        LOG.info("Current students in DB : {}", service.countStudents());
-
-        List<student> students = service.getAllStudents();
-        LOG.info("List of all students: {}", students); */
+        course.getApplications().add(application);*/
     }
+}
 
