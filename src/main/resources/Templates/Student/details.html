@@ -14,7 +14,7 @@
 
         <section>
             <div>
-                <a type="button" th:href="${'/student/applyForNewCourse?studentId=' + student.id}" class="btn btn-del btn:hover">Sign Up for new Course</a>
+                <a type="button" th:href="${'/student/applyForCourse?studentId=' + student.id}" class="btn btn-details btn:hover">Sign Up for new Course</a>
             </div>
             <br>
             <div class="container1">
@@ -26,22 +26,17 @@
                 <p><strong>Username:</strong></p>
                 <p th:text="${student.user.username}"></p>
             </div>
-            <div class="container1">
-                <p><strong>Password:</strong></p>
-                <p th:text="${student.user.password}"></p>
-            </div>
             <br>
             <div class="container1">
                 <p><strong>Type:</strong></p>
-                <p th:text="${student.user.usertype.usertype}"></p>
+                <p th:text="${student.user.userType.userType}"></p>
             </div>
+            <br>
 
             <div>
                 <h1>Enrolled Courses</h1>
-                <p></p>
-                <a type="button" href="/course/addStudent" class="btn btn-create btn:hover">Add</a>
-                <p></p>
-                <table class="sortable" id="tableStudents">
+                <br>
+                <table class="sortable" id="tableEnrolledCourses">
                     <thead>
                     <tr>
                         <th>Name Danish</th>
@@ -59,6 +54,35 @@
                         <td>
                             <a th:href="${'/course/details?id='+course.id}" type="button" class="btn btn-ed btn:hover">Details</a>
                             <a th:href="${'/student/removeStudent?courseId=' + course.id + '&studentId=' + student.id}" type="button" class="btn btn-del btn:hover">Remove</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table><br>
+            </div>
+
+            <div>
+                <h1>Applications</h1>
+                <br>
+                <table class="sortable" id="tableApplications">
+                    <thead>
+                    <tr>
+                        <th>Name Danish</th>
+                        <th>Name English</th>
+                        <th>ECTS</th>
+                        <th>Date for Sign Up</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="a: ${applications}">
+                        <td th:text="${a.course.nameDanish}"></td>
+                        <td th:text="${a.course.nameEnglish}"></td>
+                        <td th:text="${a.course.ECTS}"></td>
+                        <td th:text="${a.timestamp}"></td>
+
+                        <td>
+                            <a th:href="${'/application/details?id='+application.id}" type="button" class="btn btn-ed btn:hover">Details</a>
+                            <a th:href="${'/student/removeSignup?courseId=' + courseId + '&studentId=' + studentId}" type="button" class="btn btn-del btn:hover">Remove</a>-->
                         </td>
                     </tr>
                     </tbody>

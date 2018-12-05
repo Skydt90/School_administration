@@ -19,7 +19,7 @@ public interface StudentService
 
     List<Student> getAllStudents();
 
-    Set<Student> getAllByCourseId(int courseId);
+    List<Student> getAllByCourseId(int courseId);
 
     long countStudents();
 }

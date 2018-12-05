@@ -51,7 +51,7 @@ public class TeacherServiceImpl implements TeacherService
     }
 
     @Override
-    public Set<Teacher> getAllByCourseId(int courseId)
+    public List<Teacher> getAllByCourseId(int courseId)
     {
         return repository.findAllByTeacherCourses_courseId(courseId);
     }

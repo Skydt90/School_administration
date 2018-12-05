@@ -3,6 +3,7 @@ package mandatory.school.administration.Controller;
 import mandatory.school.administration.Model.Application;
 import mandatory.school.administration.Model.Course;
 import mandatory.school.administration.Model.Student;
+import mandatory.school.administration.Model.StudentCourse;
 import mandatory.school.administration.Services.student.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,16 +22,27 @@ public class StudentController
     @Autowired
     StudentService studentService;
 
-    @GetMapping("/")
-    public String details(Model model, @RequestParam int id)
+    @GetMapping("")
+    public String details(Model model)
     {
-        Course course = courseService.findCourseById(id);
-        model.addAttribute("student", studentService.findStudentById(id));
-        model.addAttribute("students", courseService.getAllByStudentId(id));
-        return "/student/details";
+        Student student = studentService.findStudentById(1);
+        model.addAttribute("student", student);
+        model.addAttribute("courses", courseService.getAllByStudentId(1));
+        model.addAttribute("studentId", 1);
+        model.addAttribute("courseId", 1);
+        model.addAttribute("applications", student.getApplications());
+        return "/Student/details";
     }
 
-    @PostMapping("/signup")
+    @GetMapping("/applyForCourse")
+    public String applyForCourse(Model model)
+    {
+        model.addAttribute("studentId", studentService.findStudentById(1));
+        model.addAttribute("courses", courseService.getAllCourses());
+        return "/Student/applyForCourse";
+    }
+
+    @GetMapping("/signup")
     public String signup(@RequestParam int studentId, @RequestParam int courseId)
     {
         Course course = courseService.findCourseById(courseId);
@@ -40,18 +52,29 @@ public class StudentController
         application.setStudent(student);
         application.setCourse(course);
         application.setTimestamp(new Date());
-
         course.getApplications().add(application);
-
-        return "redirect:/course";
+        studentService.createStudent(student);
+        courseService.createCourse(course);
+        return "redirect:/student";
     }
 
-    @DeleteMapping("/removeSignup")
+    @GetMapping("/removeSignup")
     public String removeSignup(@RequestParam int studentId, int courseId)
     {
         Course course = courseService.findCourseById(courseId);
         Application application = course.getApplicationByStudentIdAndCourseId(studentId, courseId);
         course.getApplications().remove(application);
-        return "redirect:/course";
+        courseService.createCourse(course);
+        return "redirect:/student";
+    }
+
+    @GetMapping("/removeStudent")
+    public String removeStudent (@RequestParam int courseId, @RequestParam int studentId)
+    {
+        Course course = courseService.findCourseById(courseId);
+        StudentCourse studentCourse = course.getStudentCourseByStudentIdAndCourseId(studentId, courseId);
+        course.getStudentCourses().remove(studentCourse);
+        courseService.editCourse(course);
+        return "redirect:/student";
     }
 }

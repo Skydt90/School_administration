@@ -27,7 +27,6 @@ public class CourseController
     @GetMapping()
     public String overview(Model model)
     {
-        //List<Course> courses = courseService.getAllCoursesLegacy();
         List<Course> courses = courseService.getAllCourses();
         model.addAttribute("courses", courses);
         model.addAttribute("count", courses.size());

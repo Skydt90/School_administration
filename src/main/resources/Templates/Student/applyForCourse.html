@@ -14,7 +14,6 @@
         </header>
 
         <a type="button" href="/student" class="btn btn-create btn:hover">Return</a>
-        <p th:text="'Total Amount of Courses:' + ' ' + ${count}"></p>
 
         <p></p>
         <table class="sortable" id="table">
@@ -33,8 +32,7 @@
                 <td th:text="${course.ECTS}"></td>
                 <td>
                     <a th:href="${'/course/details?id='+course.id}" type="button" class="btn btn-ed btn:hover">Details</a>
-                    <a th:href="${'/student/signUp?studentId=' + student.id + '&courseId=' + course.id}" type="button" class="btn btn-ed btn:hover">Details</a>
-
+                    <a th:href="${'/student/signup?studentId=' + studentId + '&courseId=' + course.id}" type="button" class="btn btn-create btn:hover">SignUp</a>
                 </td>
             </tr>
             </tbody>

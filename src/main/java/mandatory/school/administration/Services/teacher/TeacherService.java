@@ -21,7 +21,7 @@ public interface TeacherService
 
     List<Teacher> getAllTeachers();
 
-    Set<Teacher> getAllByCourseId(int courseId);
+    List<Teacher> getAllByCourseId(int courseId);
 
     long countTeachers();
 }

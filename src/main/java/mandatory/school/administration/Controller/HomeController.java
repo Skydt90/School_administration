@@ -12,6 +12,12 @@ public class HomeController
         return "home";
     }
 
+    @GetMapping("/")
+    public String homeEmpty()
+    {
+        return "home";
+    }
+
     @GetMapping("/fail")
     public String fail()
     {

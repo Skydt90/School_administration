@@ -50,15 +50,14 @@ public class SchoolAdministrationApplication implements CommandLineRunner
     @Transactional
     public void run(String... strings) throws Exception
     {
-        Course course = courseRepository.getOne(3);
-        Teacher teacher = teacherRepository.getOne(2);
-
-        TeacherCourse teacherCourse = course.getTeacherCourseByTeacherIdAndCourseId(teacher.getId(), course.getId());
-
-        course.getTeacherCourses().remove(teacherCourse);
         /*
-        System.out.println(course);
-        System.out.println(student);
+        Course course = courseRepository.getOne(3);
+        Student student = studentRepository.getOne(1);
+        //Teacher teacher = teacherRepository.getOne(2);
+
+        //TeacherCourse teacherCourse = course.getTeacherCourseByTeacherIdAndCourseId(teacher.getId(), course.getId());
+
+        //course.getTeacherCourses().remove(teacherCourse);
 
         Application application = new Application();
         application.setStudent(student);

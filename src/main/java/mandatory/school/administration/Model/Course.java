@@ -96,7 +96,7 @@ public class Course
     }
 
     @NotNull(message = "is required")
-    @Pattern(regexp = "[ a-zA-ZæÆøØåÅ]+$", message = "Only characters allowed")
+    @Pattern(regexp = "[ ,.a-zA-ZæÆøØåÅ]+$", message = "Only characters allowed")
     @Size(min = 10, max = 100, message = "Must be at least 10 characters, and maximum 100")
     @Column(name = "description")
     @JsonProperty("description")
@@ -110,7 +110,7 @@ public class Course
     }
 
     @NotNull(message = "is required")
-    @Pattern(regexp = "[a-zA-ZæÆøØåÅ]+$", message = "Only characters allowed")
+    @Pattern(regexp = "[ a-zA-ZæÆøØåÅ]+$", message = "Only characters allowed")
     @Column(name = "name_danish")
     @JsonProperty("namedanish")
     public String getNameDanish()
@@ -124,7 +124,7 @@ public class Course
 
     @NotNull(message = "is required")
     @Size(min = 3, max = 40)
-    @Pattern(regexp = "[a-zA-Z]+$", message = "Only characters allowed")
+    @Pattern(regexp = "[ a-zA-Z]+$", message = "Only characters allowed")
     @Column(name = "name_english")
     @JsonProperty("name")
     public String getNameEnglish()
@@ -138,7 +138,7 @@ public class Course
 
     @NotNull(message = "is required")
     @Size(min = 3, max = 20)
-    @Pattern(regexp = "[a-zA-Z]+$", message = "Only characters allowed")
+    @Pattern(regexp = "[ ,.a-zA-Z]+$", message = "Only characters allowed")
     @Column(name = "study_programme")
     @JsonProperty("studyprogramme")
     public String getStudyProgramme()
@@ -165,7 +165,7 @@ public class Course
     }
 
     @Min(value = 0, message = "must be equal to or greater than 0")
-    @Max(value = 10, message = "must be equal to or less than 10")
+    @Max(value = 30, message = "must be equal to or less than 10")
     @Column(name = "ECTS")
     @JsonProperty("ects")
     public int getECTS()
@@ -227,8 +227,8 @@ public class Course
         this.maximumStudents = maximumStudents;
     }
 
-    @Pattern(regexp = "[a-zA-ZøØæÆåÅ]+$", message = "Only characters allowed")
-    @Size(min = 0, max = 100, message = "cannot exceed 100 characters")
+    @Pattern(regexp = "[ ,.a-zA-ZøØæÆåÅ]+$", message = "Only characters allowed")
+    @Size(min = 0, max = 200, message = "cannot exceed 200 characters")
     @Column(name = "prerequisites")
     public String getPrerequisites()
     {
@@ -239,7 +239,7 @@ public class Course
         this.prerequisites = prerequisites;
     }
 
-    @Pattern(regexp = "[a-zA-ZøØæÆåÅ]+$", message = "Only characters allowed")
+    @Pattern(regexp = "[ ,.a-zA-ZøØæÆåÅ]+$", message = "Only characters allowed")
     @Size(max = 300, message = "cannot exceed 300 characters")
     @Column(name = "learning_outcome")
     public String getLearningOutcome()
@@ -251,7 +251,7 @@ public class Course
         this.learningOutcome = learningOutcome;
     }
 
-    @Pattern(regexp = "[a-zA-ZøØæÆåÅ]+$", message = "Only characters allowed")
+    @Pattern(regexp = "[ ,.a-zA-ZøØæÆåÅ]+$", message = "Only characters allowed")
     @Size(max = 300, message = "cannot exceed 300 characters")
     @Column(name = "content")
     public String getContent()
@@ -263,7 +263,7 @@ public class Course
         this.content = content;
     }
 
-    @Pattern(regexp = "[a-zA-ZøØæÆåÅ]+$", message = "Only characters allowed")
+    @Pattern(regexp = "[ ,.a-zA-ZøØæÆåÅ]+$", message = "Only characters allowed")
     @Size(max = 300, message = "cannot exceed 300 characters")
     @Column(name = "learning_activities")
     public String getLearningActivities()
@@ -275,7 +275,7 @@ public class Course
         this.learningActivities = learningActivities;
     }
 
-    @Pattern(regexp = "[a-zA-ZøØæÆåÅ]+$", message = "Only characters allowed")
+    @Pattern(regexp = "[ ,.a-zA-ZøØæÆåÅ]+$", message = "Only characters allowed")
     @Size(max = 300, message = "cannot exceed 300 characters")
     @Column(name = "exam_form")
     public String getExamForm()

@@ -51,7 +51,7 @@ public class StudentServiceImpl implements StudentService
     }
 
     @Override
-    public Set<Student> getAllByCourseId(int courseId)
+    public List<Student> getAllByCourseId(int courseId)
     {
         return repository.findAllByStudentCourses_courseId(courseId);
     }
