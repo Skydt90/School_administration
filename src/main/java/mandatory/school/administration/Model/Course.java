@@ -96,7 +96,6 @@ public class Course
     }
 
     @NotNull(message = "is required")
-    @Pattern(regexp = "[ ,.a-zA-ZæÆøØåÅ]+$", message = "Only characters allowed")
     @Size(min = 10, max = 100, message = "Must be at least 10 characters, and maximum 100")
     @Column(name = "description")
     @JsonProperty("description")
@@ -110,7 +109,7 @@ public class Course
     }
 
     @NotNull(message = "is required")
-    @Pattern(regexp = "[ a-zA-ZæÆøØåÅ]+$", message = "Only characters allowed")
+    @Pattern(regexp = "[ a-zA-ZæÆøØåÅ1-9,.-]+$", message = "Only characters allowed")
     @Column(name = "name_danish")
     @JsonProperty("namedanish")
     public String getNameDanish()
@@ -124,7 +123,7 @@ public class Course
 
     @NotNull(message = "is required")
     @Size(min = 3, max = 40)
-    @Pattern(regexp = "[ a-zA-Z]+$", message = "Only characters allowed")
+    @Pattern(regexp = "[ a-zA-Z1-9,.-]+$", message = "Only characters allowed")
     @Column(name = "name_english")
     @JsonProperty("name")
     public String getNameEnglish()
@@ -191,7 +190,7 @@ public class Course
         this.language = language;
     }
 
-    @Min(value = 5, message = "must have 5 or more students")
+    @Min(value = 0)
     @Max(value  = 45, message = "cannot exceed 45 students")
     @Column(name = "minimum_students")
     public int getMinimumStudents()
@@ -203,7 +202,7 @@ public class Course
         this.minimumStudents = minimumStudents;
     }
 
-    @Min(value = 5, message = "must have 5 or more students")
+    @Min(value = 0)
     @Max(value  = 45, message = "cannot exceed 45 students")
     @Column(name = "expected_students")
     public int getExpectedStudents()
@@ -215,7 +214,7 @@ public class Course
         this.expectedStudents = expectedStudents;
     }
 
-    @Min(value = 5, message = "must have 5 or more students")
+    @Min(value = 0)
     @Max(value  = 45, message = "cannot exceed 45 students")
     @Column(name = "maximum_students")
     public int getMaximumStudents()
@@ -315,46 +314,6 @@ public class Course
     public void setApplications(Set<Application> applications)
     {
         this.applications = applications;
-    }
-
-    public TeacherCourse getTeacherCourseByTeacherIdAndCourseId(int teacherId, int courseId)
-    {
-        TeacherCourse teacherCourse = null;
-        for (TeacherCourse tc: teacherCourses)
-        {
-            if (tc.getTeacher().getId() == teacherId && tc.getCourse().getId() == courseId)
-            {
-                teacherCourse = tc;
-                break;
-            }
-        }
-        return teacherCourse;
-    }
-    public StudentCourse getStudentCourseByStudentIdAndCourseId(int studentId, int courseId)
-    {
-        StudentCourse studentCourse = null;
-        for (StudentCourse sc: studentCourses)
-        {
-            if (sc.getStudent().getId() == studentId && sc.getCourse().getId() == courseId)
-            {
-                studentCourse = sc;
-                break;
-            }
-        }
-        return studentCourse;
-    }
-    public Application getApplicationByStudentIdAndCourseId(int studentId, int courseId)
-    {
-        Application application = null;
-        for (Application a: applications)
-        {
-            if (a.getStudent().getId() == studentId && a.getCourse().getId() == courseId)
-            {
-                application = a;
-                break;
-            }
-        }
-        return application;
     }
 
     @Override

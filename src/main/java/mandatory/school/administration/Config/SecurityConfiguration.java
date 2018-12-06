@@ -9,15 +9,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-//Inspired by https://o7planning.org/en/10603/spring-mvc-security-and-spring-jdbc-tutorial
-
-
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 {
-    /*
-    Fields
-     */
+
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
@@ -37,13 +32,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
         //Free pages
         http.authorizeRequests().antMatchers("/login","/logout","/fail").permitAll();
 
-        //Can be accessed by both
-        http.authorizeRequests().antMatchers("/course").access("isAuthenticated()");
-                //access("hasAnyAuthority('Administrator','student','teacher')");
+        //Can be accessed by all
+        http.authorizeRequests().antMatchers("/home","/","/course","/course/details*","/student",
+                "/student/details*","/teacher","/teacher/details*").access("isAuthenticated()");
 
-        //For admin only
-        //http.authorizeRequests().antMatchers("/users*", "/reset").hasAuthority("Administrator");
-                //access("hasAuthority('Administrator')");
+        //For teacher only
+        http.authorizeRequests().antMatchers("/course/*").access("hasAnyAuthority('admin','teacher')");
+
+        //For admins only
+        http.authorizeRequests().antMatchers("/teacher*","/student*","/application*").hasAuthority("admin");
 
         //Acces denied page
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/fail");
@@ -64,5 +61,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
-
 }

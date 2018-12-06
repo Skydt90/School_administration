@@ -11,6 +11,8 @@ public interface StudentService
 
     Student findStudentById(int id);
 
+    Student findStudentByUsername(String username);
+
     void editStudent(Student student);
 
     void deleteStudent(Student student);

@@ -15,7 +15,7 @@
         <section>
             <div>
                 <a type="button" href="/course/" class="btn btn-del btn:hover">Return</a>
-                <a type="button" href="/course/edit" class="btn btn-del btn:hover">Edit</a>
+                <a type="button" th:href="${'/course/edit?courseId=' + course.id}" class="btn btn-del btn:hover">Edit</a>
             </div>
             <br>
             <div class="container1">

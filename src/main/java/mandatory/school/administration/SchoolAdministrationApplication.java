@@ -1,27 +1,23 @@
 package mandatory.school.administration;
 
 import mandatory.school.administration.Controller.CourseController;
-import mandatory.school.administration.Model.*;
 import mandatory.school.administration.Repositories.UsertypeRepository;
 import mandatory.school.administration.Repositories.course.CourseRepository;
 import mandatory.school.administration.Repositories.student.StudentRepository;
 import mandatory.school.administration.Repositories.teacher.TeacherRepository;
 import mandatory.school.administration.Repositories.user.UserRepository;
-import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
-import javax.management.Query;
 import javax.transaction.Transactional;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
 
 @SpringBootApplication
+@EnableScheduling
 public class SchoolAdministrationApplication implements CommandLineRunner
 {
     private static final Logger LOG = LoggerFactory.getLogger("LOG");

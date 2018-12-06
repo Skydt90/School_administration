@@ -3,6 +3,7 @@ package mandatory.school.administration.Controller;
 import mandatory.school.administration.Model.*;
 import mandatory.school.administration.Services.student.StudentService;
 import mandatory.school.administration.Services.teacher.TeacherService;
+import mandatory.school.administration.Utilities.CourseUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import mandatory.school.administration.Services.course.CourseService;
@@ -23,6 +24,8 @@ public class CourseController
     TeacherService teacherService;
     @Autowired
     StudentService studentService;
+    @Autowired
+    CourseUtilities courseUtilities;
 
     @GetMapping()
     public String overview(Model model)
@@ -79,14 +82,14 @@ public class CourseController
         }
         courseService.createCourseLegacy(course);
         courseService.editCourse(course);
-        return "redirect:/course";
+        return "redirect:/course/details?id=" + course.getId();
     }
 
     @GetMapping("/removeStudent")
     public String removeStudent (@RequestParam int courseId, @RequestParam int studentId)
     {
         Course course = courseService.findCourseById(courseId);
-        StudentCourse studentCourse = course.getStudentCourseByStudentIdAndCourseId(studentId, courseId);
+        StudentCourse studentCourse = courseUtilities.getStudentCourseByStudentIdAndCourseId(studentId, courseId, course.getStudentCourses());
         course.getStudentCourses().remove(studentCourse);
         courseService.editCourse(course);
         return "redirect:/course/details?id=" + courseId;
@@ -96,7 +99,7 @@ public class CourseController
     public String removeTeacher (@RequestParam int courseId, @RequestParam int teacherId, Model model)
     {
         Course course = courseService.findCourseById(courseId);
-        TeacherCourse teacherCourse = course.getTeacherCourseByTeacherIdAndCourseId(teacherId, courseId);
+        TeacherCourse teacherCourse = courseUtilities.getTeacherCourseByTeacherIdAndCourseId(teacherId, courseId, course.getTeacherCourses());
         course.getTeacherCourses().remove(teacherCourse);
         courseService.editCourse(course);
         return "redirect:/course/details?id=" + courseId;

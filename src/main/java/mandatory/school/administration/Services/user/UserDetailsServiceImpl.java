@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-//Inspired by https://o7planning.org/en/10603/spring-mvc-security-and-spring-jdbc-tutorial
-
 @Component(value="userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService
 {
@@ -39,7 +37,7 @@ public class UserDetailsServiceImpl implements UserDetailsService
         List<GrantedAuthority> grantList = new ArrayList<>();
 
         //Input the usertype in the grant list
-        GrantedAuthority authority = new SimpleGrantedAuthority(appUser.getUserType().toString());
+        GrantedAuthority authority = new SimpleGrantedAuthority(appUser.getUserType().getUserType());
         grantList.add(authority);
 
         //Make the security user from the userdata

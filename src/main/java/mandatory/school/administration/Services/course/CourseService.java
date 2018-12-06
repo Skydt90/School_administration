@@ -18,9 +18,11 @@ public interface CourseService
 
     void deleteCourseById(int id);
 
+    void saveAll(List<Course> courses);
+
     List<Course> getAllCourses();
 
-    List<Course> getAllCoursesLegacy();
+    void getAllCoursesLegacy();
 
     List<Course> getAllByStudentId(int studentId);
 

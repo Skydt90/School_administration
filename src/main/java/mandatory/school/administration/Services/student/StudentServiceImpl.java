@@ -27,6 +27,12 @@ public class StudentServiceImpl implements StudentService
     }
 
     @Override
+    public Student findStudentByUsername(String username)
+    {
+        return repository.findStudentByUser_username(username);
+    }
+
+    @Override
     public void editStudent(Student student)
     {
         repository.save(student);

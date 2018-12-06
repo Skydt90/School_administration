@@ -7,4 +7,5 @@ public interface CourseRepositoryCustom
     Course[] getCoursesLegacy();
 
     Course postCourseLegacy(Course course);
+
 }
