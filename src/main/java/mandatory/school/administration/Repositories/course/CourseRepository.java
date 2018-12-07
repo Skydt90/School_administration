@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Integer>, CourseRepositoryCustom
 {
+    List<Course> findAllByApplications_studentId(int studentId);
     List<Course> findAllByStudentCourses_studentId(int studentId);
 }

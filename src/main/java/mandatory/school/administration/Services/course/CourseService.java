@@ -1,6 +1,8 @@
 package mandatory.school.administration.Services.course;
 
 import mandatory.school.administration.Model.Course;
+import mandatory.school.administration.Model.Teacher;
+import mandatory.school.administration.Services.teacher.TeacherService;
 
 import java.util.List;
 
@@ -24,7 +26,12 @@ public interface CourseService
 
     void getAllCoursesLegacy();
 
-    List<Course> getAllByStudentId(int studentId);
+    List<Course> getAllCoursesStudentHasApplied(int studentId);
+
+    List<Course> getAllCoursesStudentHasEnrolled(int studentId);
 
     long countCourses();
+
+    void removeTeacherFromCourse(int teacherId, int courseId);
+    void removeStudentFromCourse(int studentid, int courseId);
 }

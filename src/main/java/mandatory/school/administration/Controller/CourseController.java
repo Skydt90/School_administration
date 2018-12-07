@@ -40,8 +40,7 @@ public class CourseController
     @GetMapping("/details")
     public String details(Model model, @RequestParam int id)
     {
-        Course course = courseService.findCourseById(id);
-        model.addAttribute("course", course);
+        model.addAttribute("course", courseService.findCourseById(id));
         model.addAttribute("students", studentService.getAllByCourseId(id));
         model.addAttribute("teachers", teacherService.getAllByCourseId(id));
         return "/course/details";

@@ -1,7 +1,12 @@
 package mandatory.school.administration.Services.course;
 
 import mandatory.school.administration.Model.Course;
+import mandatory.school.administration.Model.StudentCourse;
+import mandatory.school.administration.Model.Teacher;
+import mandatory.school.administration.Model.TeacherCourse;
 import mandatory.school.administration.Repositories.course.CourseRepository;
+import mandatory.school.administration.Services.teacher.TeacherService;
+import mandatory.school.administration.Utilities.CourseUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -58,7 +63,7 @@ public class CourseServiceImpl implements CourseService
     }
 
     @Override
-    @Scheduled(fixedRate = 120 * 1000)
+    //@Scheduled(fixedRate = 120 * 1000)
     public void getAllCoursesLegacy()
     {
         ArrayList<Course> legacyCourses = new ArrayList<>(Arrays.asList(repository.getCoursesLegacy()));
@@ -79,8 +84,6 @@ public class CourseServiceImpl implements CourseService
             }
         }
 
-        System.out.println(missingCourses);
-
         if (!missingCourses.isEmpty())
         {
             saveAll(missingCourses);
@@ -94,14 +97,40 @@ public class CourseServiceImpl implements CourseService
     }
 
     @Override
-    public List<Course> getAllByStudentId(int studentId)
+    public List<Course> getAllCoursesStudentHasApplied(int studentId)
     {
-        return repository.findAllByStudentCourses_studentId(studentId);
+        return new ArrayList<>(repository.findAllByApplications_studentId(studentId));
+    }
+
+    @Override
+    public List<Course> getAllCoursesStudentHasEnrolled(int studentId)
+    {
+        return new ArrayList<>(repository.findAllByStudentCourses_studentId(studentId));
     }
 
     @Override
     public long countCourses()
     {
         return repository.count();
+    }
+
+    @Override
+    public void removeTeacherFromCourse(int teacherId, int courseId)
+    {
+        Course course = findCourseById(courseId);
+
+        TeacherCourse teacherCourse = CourseUtilities.getTeacherCourseByTeacherIdAndCourseId(teacherId, courseId, course.getTeacherCourses());
+        course.getTeacherCourses().remove(teacherCourse);
+        editCourse(course);
+    }
+
+    @Override
+    public void removeStudentFromCourse(int studentId, int courseId)
+    {
+        Course course = findCourseById(courseId);
+
+        StudentCourse studentCourse = CourseUtilities.getStudentCourseByStudentIdAndCourseId(studentId, courseId, course.getStudentCourses());
+        course.getStudentCourses().remove(studentCourse);
+        editCourse(course);
     }
 }

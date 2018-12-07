@@ -9,24 +9,24 @@ public class HomeController
     @GetMapping("/home")
     public String home()
     {
-        return "home";
+        return "/home";
     }
 
     @GetMapping("/")
     public String homeEmpty()
     {
-        return "home";
+        return "/home";
     }
 
     @GetMapping("/fail")
     public String fail()
     {
-        return "fail";
+        return "/fail";
     }
 
     @GetMapping("/login")
     public String login()
     {
-        return "login";
+        return "/login";
     }
 }

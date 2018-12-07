@@ -15,7 +15,7 @@
         <section>
             <div>
                 <a type="button" href="/course/" class="btn btn-del btn:hover">Return</a>
-                <a type="button" th:href="${'/course/edit?courseId=' + course.id}" class="btn btn-del btn:hover">Edit</a>
+                <a type="button" th:href="${'/course/edit?courseId=' + course.id}" class="btn btn-ed btn:hover">Edit</a>
             </div>
             <br>
             <div class="container1">
@@ -104,7 +104,6 @@
                     <tr>
                         <th>Name</th>
                         <th>Username</th>
-                        <th>Password</th>
                         <th>User Type</th>
                         <th></th>
                     </tr>
@@ -113,7 +112,6 @@
                     <tr th:each="student: ${students}">
                         <td th:text="${student.name}"></td>
                         <td th:text="${student.user.username}"></td>
-                        <td th:text="${student.user.password}"></td>
                         <td th:text="${student.user.userType.userType}"></td>
 
                         <td>
@@ -135,7 +133,6 @@
                     <tr>
                         <th>Name</th>
                         <th>Username</th>
-                        <th>Password</th>
                         <th>user Type</th>
                         <th></th>
                     </tr>
@@ -144,7 +141,6 @@
                     <tr th:each="teacher: ${teachers}">
                         <td th:text="${teacher.name}"></td>
                         <td th:text="${teacher.user.username}"></td>
-                        <td th:text="${teacher.user.password}"></td>
                         <td th:text="${teacher.user.userType.userType}"></td>
                         <td>
                             <a th:href="${'/teacher/details?id='+teacher.id}" type="button" class="btn btn-ed btn:hover">Details</a>

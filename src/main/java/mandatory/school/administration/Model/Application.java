@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "applications")
-public class Application implements Serializable
+public class Application implements Serializable, Comparable<Application>
 {
     private Student student;
     private Course course;
@@ -59,5 +59,11 @@ public class Application implements Serializable
                 ", timestamp=" + timestamp +
 
                 '}';
+    }
+
+    @Override
+    public int compareTo(Application a)
+    {
+        return this.getTimestamp().compareTo(a.getTimestamp());
     }
 }

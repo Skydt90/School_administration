@@ -1,16 +1,16 @@
 package mandatory.school.administration.Utilities;
 
-import mandatory.school.administration.Model.Application;
-import mandatory.school.administration.Model.StudentCourse;
-import mandatory.school.administration.Model.TeacherCourse;
+import mandatory.school.administration.Model.*;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Component
 public class CourseUtilities
 {
-    public TeacherCourse getTeacherCourseByTeacherIdAndCourseId(int teacherId, int courseId, Set<TeacherCourse> teacherCourses)
+    public static TeacherCourse getTeacherCourseByTeacherIdAndCourseId(int teacherId, int courseId, Set<TeacherCourse> teacherCourses)
     {
         TeacherCourse teacherCourse = null;
         for (TeacherCourse tc: teacherCourses)
@@ -24,7 +24,7 @@ public class CourseUtilities
         return teacherCourse;
     }
 
-    public StudentCourse getStudentCourseByStudentIdAndCourseId(int studentId, int courseId, Set<StudentCourse> studentCourses)
+    public static StudentCourse getStudentCourseByStudentIdAndCourseId(int studentId, int courseId, Set<StudentCourse> studentCourses)
     {
         StudentCourse studentCourse = null;
         for (StudentCourse sc: studentCourses)
@@ -37,7 +37,7 @@ public class CourseUtilities
         }
         return studentCourse;
     }
-    public Application getApplicationByStudentIdAndCourseId(int studentId, int courseId, Set<Application> applications)
+    public static Application getApplicationByStudentIdAndCourseId(int studentId, int courseId, Set<Application> applications)
     {
         Application application = null;
         for (Application a: applications)
@@ -49,5 +49,12 @@ public class CourseUtilities
             }
         }
         return application;
+    }
+
+    public static List<Course> getCoursesStudentHaveNotSignedupFor(List<Course> courses, List<Course> appliedCourses, List<Course> enrolledCourses)
+    {
+        courses.removeAll(appliedCourses);
+        courses.removeAll(enrolledCourses);
+        return courses;
     }
 }
