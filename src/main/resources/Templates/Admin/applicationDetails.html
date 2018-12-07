@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Application Details</title>
+    <link href="/CSS/kartotek_style.css" rel="stylesheet">
+</head>
+<body>
+    <th:block th:include="_navigation"></th:block>
+
+    <div class="container">
+        <header>
+            <h1>Application Details</h1>
+        </header>
+
+        <section>
+            <div>
+                <a type="button" href="/admin/applications" class="btn btn-ed btn:hover">return</a>
+                <a type="button" th:href="${'/admin/acceptApplication?studentId=' + a.student.id + '&courseId=' + a.course.id}" class="btn btn-create btn:hover">Accept</a>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Student Name:</strong></p>
+                <p th:text="${a.student.name}"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Course Name Danish:</strong></p>
+                <p th:text="${a.course.nameDanish}"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Course Name English:</strong></p>
+                <p th:text="${a.course.nameEnglish}"></p>
+            </div>
+            <br>
+        </section>
+        <br>
+        <br>
+        <footer>
+            <th:block th:include="_footer"></th:block>
+        </footer>
+    </div>
+</body>
+</html>
