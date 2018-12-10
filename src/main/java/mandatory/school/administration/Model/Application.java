@@ -12,7 +12,7 @@ import java.util.Date;
 public class Application implements Serializable, Comparable<Application>
 {
     private Student student;
-    private Course course;
+    private LocalCourse course;
     private Date timestamp;
 
     @Id
@@ -30,11 +30,11 @@ public class Application implements Serializable, Comparable<Application>
     @Id
     @ManyToOne
     @JoinColumn(name = "course_id")
-    public Course getCourse()
+    public LocalCourse getCourse()
     {
         return course;
     }
-    public void setCourse(Course course)
+    public void setCourse(LocalCourse course)
     {
         this.course = course;
     }

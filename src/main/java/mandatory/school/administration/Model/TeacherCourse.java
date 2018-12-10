@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class TeacherCourse implements Serializable
 {
     private Teacher teacher;
-    private Course course;
+    private LocalCourse course;
 
     @Id
     @ManyToOne
@@ -25,10 +25,10 @@ public class TeacherCourse implements Serializable
     @Id
     @ManyToOne
     @JoinColumn(name = "course_id")
-    public Course getCourse() {
+    public LocalCourse getCourse() {
         return course;
     }
-    public void setCourse(Course course)
+    public void setCourse(LocalCourse course)
     {
         this.course = course;
     }

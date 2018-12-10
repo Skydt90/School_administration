@@ -1,9 +1,6 @@
 package mandatory.school.administration.Services.Application;
 
-import mandatory.school.administration.Model.Application;
-import mandatory.school.administration.Model.Course;
-import mandatory.school.administration.Model.Student;
-import mandatory.school.administration.Model.StudentCourse;
+import mandatory.school.administration.Model.*;
 import mandatory.school.administration.Repositories.Application.ApplicationRepository;
 import mandatory.school.administration.Services.course.CourseService;
 import mandatory.school.administration.Services.student.StudentService;
@@ -39,7 +36,7 @@ public class ApplicationServiceImpl implements ApplicationService
         //  create new studentCourse
         StudentCourse studentCourse = new StudentCourse();
         studentCourse.setStudent(student);
-        studentCourse.setCourse(course);
+        studentCourse.setCourse(course.getLocalCourse());
 
         //  add studentCourse to student
         student.getStudentCourses().add(studentCourse);
@@ -49,7 +46,7 @@ public class ApplicationServiceImpl implements ApplicationService
         student.getApplications().remove(application);
 
         //  save update
-        courseService.createCourse(course);
+        courseService.createLocalCourse(course.getLocalCourse());
         studentService.createStudent(student);
     }
 
@@ -58,11 +55,11 @@ public class ApplicationServiceImpl implements ApplicationService
     {
         Application application = new Application();
         application.setStudent(student);
-        application.setCourse(course);
+        application.setCourse(course.getLocalCourse());
         application.setTimestamp(new Date());
 
         student.getApplications().add(application);
-        courseService.editCourse(course);
+        courseService.editCourse(course.getLocalCourse());
         studentService.editStudent(student);
     }
 

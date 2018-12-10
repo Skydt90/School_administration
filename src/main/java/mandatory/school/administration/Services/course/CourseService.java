@@ -1,34 +1,39 @@
 package mandatory.school.administration.Services.course;
 
 import mandatory.school.administration.Model.Course;
-import mandatory.school.administration.Model.Teacher;
-import mandatory.school.administration.Services.teacher.TeacherService;
+import mandatory.school.administration.Model.LocalCourse;
 
 import java.util.List;
 
 public interface CourseService
 {
-    Course createCourse(Course course);
+    LocalCourse createLocalCourse(LocalCourse course);
 
     Course createCourseLegacy(Course course);
 
-    Course findCourseById(int id);
+    LocalCourse findCourseById(int id);
 
-    void editCourse(Course course);
+    void editCourse(LocalCourse course);
 
-    void deleteCourse(Course course);
+    void deleteCourse(LocalCourse course);
 
     void deleteCourseById(int id);
 
-    void saveAll(List<Course> courses);
+    void saveAll(List<LocalCourse> courses);
 
-    List<Course> getAllCourses();
+    List<LocalCourse> getAllCourses();
 
-    void getAllCoursesLegacy();
+    List<Course> getAllCoursesLegacy();
 
-    List<Course> getAllCoursesStudentHasApplied(int studentId);
+    List<LocalCourse> getAllCoursesStudentHasApplied(int studentId);
 
-    List<Course> getAllCoursesStudentHasEnrolled(int studentId);
+    List<LocalCourse> getAllCoursesStudentHasEnrolled(int studentId);
+
+    void updateCourses();
+
+    List<Course> getFullCourses();
+
+    Course getFullCourseById(int id);
 
     long countCourses();
 

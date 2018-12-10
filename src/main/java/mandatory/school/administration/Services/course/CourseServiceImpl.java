@@ -1,27 +1,31 @@
 package mandatory.school.administration.Services.course;
 
 import mandatory.school.administration.Model.Course;
+import mandatory.school.administration.Model.LocalCourse;
 import mandatory.school.administration.Model.StudentCourse;
-import mandatory.school.administration.Model.Teacher;
 import mandatory.school.administration.Model.TeacherCourse;
 import mandatory.school.administration.Repositories.course.CourseRepository;
-import mandatory.school.administration.Services.teacher.TeacherService;
 import mandatory.school.administration.Utilities.CourseUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class CourseServiceImpl implements CourseService
 {
     @Autowired
     private CourseRepository repository;
+    @Autowired
+    private CourseUtilities courseUtilities;
+
+    private List<Course> courses = new ArrayList<>();
 
 
     @Override
-    public Course createCourse(Course course)
+    public LocalCourse createLocalCourse(LocalCourse course)
     {
         return repository.save(course);
     }
@@ -33,19 +37,19 @@ public class CourseServiceImpl implements CourseService
     }
 
     @Override
-    public Course findCourseById(int id)
+    public LocalCourse findCourseById(int id)
     {
         return repository.getOne(id);
     }
 
     @Override
-    public void editCourse(Course course)
+    public void editCourse(LocalCourse course)
     {
         repository.save(course);
     }
 
     @Override
-    public void deleteCourse(Course course)
+    public void deleteCourse(LocalCourse course)
     {
         repository.delete(course);
     }
@@ -56,54 +60,33 @@ public class CourseServiceImpl implements CourseService
         repository.deleteById(id);
     }
 
+
     @Override
-    public List<Course> getAllCourses()
+    public List<LocalCourse> getAllCourses()
     {
         return repository.findAll();
     }
 
     @Override
-    //@Scheduled(fixedRate = 120 * 1000)
-    public void getAllCoursesLegacy()
+    public List<Course> getAllCoursesLegacy()
     {
-        ArrayList<Course> legacyCourses = new ArrayList<>(Arrays.asList(repository.getCoursesLegacy()));
-        ArrayList<Course> localCourses = new ArrayList<>(repository.findAll());
-        ArrayList<Course> missingCourses = new ArrayList<>();
-
-        Map<String, String> names = new HashMap<>();
-        for (Course c: localCourses)
-        {
-            names.put(c.getNameDanish(), c.getNameEnglish() + c.getLanguage());
-        }
-
-        for (Course legacy : legacyCourses)
-        {
-            if(!names.containsKey(legacy.getNameDanish()) || !names.containsValue(legacy.getNameEnglish() + legacy.getLanguage()))
-            {
-                missingCourses.add(legacy);
-            }
-        }
-
-        if (!missingCourses.isEmpty())
-        {
-            saveAll(missingCourses);
-        }
+        return new ArrayList<>(Arrays.asList(repository.getCoursesLegacy()));
     }
 
     @Override
-    public void saveAll(List<Course> courses)
+    public void saveAll(List<LocalCourse> courses)
     {
         repository.saveAll(courses);
     }
 
     @Override
-    public List<Course> getAllCoursesStudentHasApplied(int studentId)
+    public List<LocalCourse> getAllCoursesStudentHasApplied(int studentId)
     {
         return new ArrayList<>(repository.findAllByApplications_studentId(studentId));
     }
 
     @Override
-    public List<Course> getAllCoursesStudentHasEnrolled(int studentId)
+    public List<LocalCourse> getAllCoursesStudentHasEnrolled(int studentId)
     {
         return new ArrayList<>(repository.findAllByStudentCourses_studentId(studentId));
     }
@@ -117,9 +100,9 @@ public class CourseServiceImpl implements CourseService
     @Override
     public void removeTeacherFromCourse(int teacherId, int courseId)
     {
-        Course course = findCourseById(courseId);
+        LocalCourse course = findCourseById(courseId);
 
-        TeacherCourse teacherCourse = CourseUtilities.getTeacherCourseByTeacherIdAndCourseId(teacherId, courseId, course.getTeacherCourses());
+        TeacherCourse teacherCourse = courseUtilities.getTeacherCourseByTeacherIdAndCourseId(teacherId, courseId, course.getTeacherCourses());
         course.getTeacherCourses().remove(teacherCourse);
         editCourse(course);
     }
@@ -127,10 +110,42 @@ public class CourseServiceImpl implements CourseService
     @Override
     public void removeStudentFromCourse(int studentId, int courseId)
     {
-        Course course = findCourseById(courseId);
+        LocalCourse course = findCourseById(courseId);
 
-        StudentCourse studentCourse = CourseUtilities.getStudentCourseByStudentIdAndCourseId(studentId, courseId, course.getStudentCourses());
+        StudentCourse studentCourse = courseUtilities.getStudentCourseByStudentIdAndCourseId(studentId, courseId, course.getStudentCourses());
         course.getStudentCourses().remove(studentCourse);
         editCourse(course);
+    }
+
+    public void updateCourses()
+    {
+        courses = getAllCoursesLegacy();
+        List<LocalCourse> localCourses = getAllCourses();
+
+        if (localCourses.size() < courses.size())
+        {
+            for (int i = localCourses.size(); i <= courses.size(); i++)
+            {
+                LocalCourse lc = new LocalCourse (i + 1);
+                localCourses.add(lc);
+                createLocalCourse(lc);
+            }
+        }
+
+        for (Course c: courses)
+        {
+            c.setLocalCourse(localCourses.get(c.getId() -1));
+        }
+    }
+
+    public List<Course> getFullCourses()
+    {
+        return courses;
+    }
+
+    @Override
+    public Course getFullCourseById(int id)
+    {
+        return courses.get(id - 1);
     }
 }

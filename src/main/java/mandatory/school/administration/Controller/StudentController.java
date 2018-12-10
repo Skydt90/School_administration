@@ -1,19 +1,19 @@
 package mandatory.school.administration.Controller;
 
-import mandatory.school.administration.Model.Application;
 import mandatory.school.administration.Model.Course;
 import mandatory.school.administration.Model.Student;
 import mandatory.school.administration.Services.Application.ApplicationService;
+import mandatory.school.administration.Services.course.CourseService;
 import mandatory.school.administration.Services.student.StudentService;
 import mandatory.school.administration.Utilities.CourseUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import mandatory.school.administration.Services.course.CourseService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.util.Date;
 
 @Controller
 @RequestMapping("/student")
@@ -38,6 +38,7 @@ public class StudentController
         return "/Student/details";
     }
 
+
     @GetMapping("/applyForCourse")
     public String applyForCourse(Model model, @RequestParam int studentId)
     {
@@ -54,28 +55,11 @@ public class StudentController
     @GetMapping("/signup")
     public String signup(@RequestParam int studentId, @RequestParam int courseId)
     {
-        Course course = courseService.findCourseById(courseId);
+        Course course = courseService.getFullCourseById(courseId);
         Student student = studentService.findStudentById(studentId);
 
         applicationService.createApplication(student, course, studentService, courseService);
         return "redirect:/student";
-    }
-
-    @GetMapping("/test")
-    public @ResponseBody Application test (@RequestParam("studentId") int studentId, @RequestParam("courseId") int courseId)
-    {
-        Student student = studentService.findStudentById(studentId);
-        Course course = courseService.findCourseById(courseId);
-
-        Application application = new Application();
-        application.setStudent(student);
-        application.setCourse(course);
-        application.setTimestamp(new Date());
-
-        student.getApplications().add(application);
-        courseService.editCourse(course);
-        studentService.editStudent(student);
-        return application;
     }
 
     @GetMapping("/removeSignup")

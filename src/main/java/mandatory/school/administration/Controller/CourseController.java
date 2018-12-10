@@ -27,10 +27,12 @@ public class CourseController
     @Autowired
     CourseUtilities courseUtilities;
 
+
     @GetMapping()
     public String overview(Model model)
     {
-        List<Course> courses = courseService.getAllCourses();
+        courseService.updateCourses();
+        List<Course> courses = courseService.getFullCourses();
         model.addAttribute("courses", courses);
         model.addAttribute("count", courses.size());
 
@@ -40,7 +42,7 @@ public class CourseController
     @GetMapping("/details")
     public String details(Model model, @RequestParam int id)
     {
-        model.addAttribute("course", courseService.findCourseById(id));
+        model.addAttribute("course", courseService.getFullCourseById(id));
         model.addAttribute("students", studentService.getAllByCourseId(id));
         model.addAttribute("teachers", teacherService.getAllByCourseId(id));
         return "/course/details";
@@ -60,15 +62,18 @@ public class CourseController
         {
             return "/course/create";
         }
-        courseService.createCourseLegacy(course);
-        courseService.createCourse(course);
-        return "redirect:/course/details?id=" + course.getId();
+        courseService.updateCourses();
+        int id = courseService.createCourseLegacy(course).getId();
+        course.getLocalCourse().setId(id);
+        courseService.createLocalCourse(course.getLocalCourse());
+        //return "redirect:/course/details?id=" + id;
+        return "redirect:/course";
     }
 
     @GetMapping("/edit")
     public String edit(Model model, @RequestParam int courseId)
     {
-        model.addAttribute("course", courseService.findCourseById(courseId));
+        model.addAttribute("course", courseService.getFullCourseById(courseId));
         return "/course/edit";
     }
 
@@ -79,15 +84,18 @@ public class CourseController
         {
             return "/course/details?id=" + course.getId();
         }
+        courseService.editCourse(course.getLocalCourse());
+        System.out.println("Course Id: " + course.getId() + " Local Id: " + course.getLocalCourse().getId());
         courseService.createCourseLegacy(course);
-        courseService.editCourse(course);
+        System.out.println("Course Id: " + course.getId() + " Local Id: " + course.getLocalCourse().getId());
+
         return "redirect:/course/details?id=" + course.getId();
     }
 
     @GetMapping("/removeStudent")
     public String removeStudent (@RequestParam int courseId, @RequestParam int studentId)
     {
-        Course course = courseService.findCourseById(courseId);
+        LocalCourse course = courseService.findCourseById(courseId);
         StudentCourse studentCourse = courseUtilities.getStudentCourseByStudentIdAndCourseId(studentId, courseId, course.getStudentCourses());
         course.getStudentCourses().remove(studentCourse);
         courseService.editCourse(course);
@@ -97,7 +105,7 @@ public class CourseController
     @GetMapping("/removeTeacher")
     public String removeTeacher (@RequestParam int courseId, @RequestParam int teacherId, Model model)
     {
-        Course course = courseService.findCourseById(courseId);
+        LocalCourse course = courseService.findCourseById(courseId);
         TeacherCourse teacherCourse = courseUtilities.getTeacherCourseByTeacherIdAndCourseId(teacherId, courseId, course.getTeacherCourses());
         course.getTeacherCourses().remove(teacherCourse);
         courseService.editCourse(course);

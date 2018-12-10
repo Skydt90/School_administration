@@ -33,6 +33,11 @@
                 <p th:text="${course.semester}"></p>
             </div>
             <br>
+                <div class="container1">
+                      <p><strong>Description:</strong></p>
+                      <p th:text="${course.description}"></p>
+                </div>
+            <br>
             <div class="container1">
                 <p><strong>Study Programme:</strong></p>
                 <p th:text="${course.studyProgramme}"></p>
@@ -55,42 +60,42 @@
             <br>
             <div class="container1">
                 <p><strong>Minimum Students:</strong></p>
-                <p th:text="${course.minimumStudents}"></p>
+                <p th:text="${course.localCourse.minimumStudents}"></p>
             </div>
             <br>
             <div class="container1">
                 <p><strong>Expected Students:</strong></p>
-                <p th:text="${course.expectedStudents}"></p>
+                <p th:text="${course.localCourse.expectedStudents}"></p>
             </div>
             <br>
             <div class="container1">
                 <p><strong>Maximum Students:</strong></p>
-                <p th:text="${course.maximumStudents}"></p>
+                <p th:text="${course.localCourse.maximumStudents}"></p>
             </div>
             <br>
             <div class="container1">
                 <p><strong>Prerequisites:</strong></p>
-                <p th:text="${course.prerequisites}"></p>
+                <p th:text="${course.localCourse.prerequisites}"></p>
             </div>
             <br>
             <div class="container1">
                  <p><strong>Learning Outcome:</strong></p>
-                 <p th:text="${course.learningOutcome}"></p>
+                 <p th:text="${course.localCourse.learningOutcome}"></p>
             </div>
             <br>
             <div class="container1">
                  <p><strong>Content:</strong></p>
-                 <p th:text="${course.content}"></p>
+                 <p th:text="${course.localCourse.content}"></p>
             </div>
             <br>
             <div class="container1">
                   <p><strong>Learning Activites:</strong></p>
-                  <p th:text="${course.learningActivities}"></p>
+                  <p th:text="${course.localCourse.learningActivities}"></p>
             </div>
             <br>
             <div class="container1">
                   <p><strong>Exam form:</strong></p>
-                  <p th:text="${course.examForm}"></p>
+                  <p th:text="${course.localCourse.examForm}"></p>
             </div>
             <br>
 

@@ -19,6 +19,8 @@
 
     <form method="Post" th:action="@{/course/edit}">
         <section>
+            <input type="hidden" th:field="${course.localCourse.id}">
+            <input type="hidden" th:field="${course.id}">
             <h2>Course details</h2>
             <p>Name Danish</p>
             <input type="text" th:field="${course.nameDanish}" value="${course.nameDanish"} required/>
@@ -38,21 +40,21 @@
                 <option th:value="english" th:text="english"/>
             </select>
             <p>Studets Minimum</p>
-            <input type="number" th:field="${course.minimumStudents}" value="${course.minimumStudents"} required/>
+            <input type="number" th:field="${course.localCourse.minimumStudents}" value="${course.localCourse.minimumStudents"} required/>
             <p>Students Expected</p>
-            <input type="number" th:field="${course.expectedStudents}" value="${course.expectedStudents"} required/>
+            <input type="number" th:field="${course.localCourse.expectedStudents}" value="${course.localCourse.expectedStudents"} required/>
             <p>Students Maximum</p>
-            <input type="number" th:field="${course.maximumStudents}" value="${course.maximumStudents"} required/>
+            <input type="number" th:field="${course.localCourse.maximumStudents}" value="${course.localCourse.maximumStudents"} required/>
             <p>Prerequisites</p>
-            <input type="text" th:field="${course.prerequisites}" value="${course.prerequisites"} required/>
+            <input type="text" th:field="${course.localCourse.prerequisites}" value="${course.localCourse.prerequisites"} required/>
             <p>Learning Outcome</p>
-            <input type="text" th:field="${course.learningOutcome}" value="${course.learningOutcome"} required/>
+            <input type="text" th:field="${course.localCourse.learningOutcome}" value="${course.localCourse.learningOutcome"} required/>
             <p>Content</p>
-            <input type="text" th:field="${course.content}" value="${course.content"} required/>
+            <input type="text" th:field="${course.localCourse.content}" value="${course.localCourse.content"} required/>
             <p>Learning Activites</p>
-            <input type="text" th:field="${course.learningActivities}" value="${course.learningActivities"} required/>
+            <input type="text" th:field="${course.localCourse.learningActivities}" value="${course.localCourse.learningActivities"} required/>
             <p>Exam form</p>
-            <input type="text" th:field="${course.examForm}" value="${course.examForm"} required/>
+            <input type="text" th:field="${course.localCourse.examForm}" value="${course.localCourse.examForm"} required/>
             <p>Description</p>
             <input type="text" th:field="${course.description}" value="${course.description"} required/>
         </section>

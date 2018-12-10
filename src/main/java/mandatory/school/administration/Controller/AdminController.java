@@ -38,11 +38,12 @@ public class AdminController
         return "/Admin/applicationDetails";
     }
 
+
     @GetMapping("/acceptApplication")
     public String acceptApplication(@RequestParam("studentId") int studentId, @RequestParam("courseId") int courseId)
     {
         Student student = studentService.findStudentById(studentId);
-        Course course = courseService.findCourseById(courseId);
+        Course course = courseService.getFullCourseById(courseId);
 
         applicationService.acceptApplication(student, course, studentService, courseService);
         return "redirect:applications";
