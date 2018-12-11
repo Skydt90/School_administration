@@ -75,9 +75,9 @@
                     </thead>
                     <tbody>
                     <tr th:each="a: ${applications}">
-                        <td th:text="${a.course.nameDanish}"></td>
-                        <td th:text="${a.course.nameEnglish}"></td>
-                        <td th:text="${a.course.ECTS}"></td>
+                        <td th:text="${a.fullCourse.nameDanish}"></td>
+                        <td th:text="${a.fullCourse.nameEnglish}"></td>
+                        <td th:text="${a.fullCourse.ECTS}"></td>
                         <td th:text="${a.timestamp}"></td>
 
                         <td>

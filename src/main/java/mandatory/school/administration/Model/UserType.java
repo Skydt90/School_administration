@@ -1,8 +1,6 @@
 package mandatory.school.administration.Model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
@@ -22,7 +20,6 @@ public class UserType
     }
 
     @Id
-    //@Size(max = 13)
     @Column(name = "user_type")
     public String getUserType()
     {

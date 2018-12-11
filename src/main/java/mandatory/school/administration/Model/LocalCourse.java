@@ -2,9 +2,6 @@ package mandatory.school.administration.Model;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -60,7 +57,6 @@ public class LocalCourse
         this.id = id;
     }
 
-    @Min(value = 0)
     @Max(value  = 45, message = "cannot exceed 45 students")
     @Column(name = "minimum_students")
     public int getMinimumStudents()
@@ -72,7 +68,6 @@ public class LocalCourse
         this.minimumStudents = minimumStudents;
     }
 
-    @Min(value = 0)
     @Max(value  = 45, message = "cannot exceed 45 students")
     @Column(name = "expected_students")
     public int getExpectedStudents()
@@ -84,7 +79,6 @@ public class LocalCourse
         this.expectedStudents = expectedStudents;
     }
 
-    @Min(value = 0)
     @Max(value  = 45, message = "cannot exceed 45 students")
     @Column(name = "maximum_students")
     public int getMaximumStudents()
@@ -96,8 +90,6 @@ public class LocalCourse
         this.maximumStudents = maximumStudents;
     }
 
-    @Pattern(regexp = "[ ,.a-zA-ZøØæÆåÅ]+$", message = "Only characters allowed")
-    @Size(min = 0, max = 200, message = "cannot exceed 200 characters")
     @Column(name = "prerequisites")
     public String getPrerequisites()
     {
@@ -108,8 +100,6 @@ public class LocalCourse
         this.prerequisites = prerequisites;
     }
 
-    @Pattern(regexp = "[ ,.a-zA-ZøØæÆåÅ]+$", message = "Only characters allowed")
-    @Size(max = 300, message = "cannot exceed 300 characters")
     @Column(name = "learning_outcome")
     public String getLearningOutcome()
     {
@@ -120,8 +110,6 @@ public class LocalCourse
         this.learningOutcome = learningOutcome;
     }
 
-    @Pattern(regexp = "[ ,.a-zA-ZøØæÆåÅ]+$", message = "Only characters allowed")
-    @Size(max = 300, message = "cannot exceed 300 characters")
     @Column(name = "content")
     public String getContent()
     {
@@ -132,8 +120,6 @@ public class LocalCourse
         this.content = content;
     }
 
-    @Pattern(regexp = "[ ,.a-zA-ZøØæÆåÅ]+$", message = "Only characters allowed")
-    @Size(max = 300, message = "cannot exceed 300 characters")
     @Column(name = "learning_activities")
     public String getLearningActivities()
     {
@@ -144,8 +130,6 @@ public class LocalCourse
         this.learningActivities = learningActivities;
     }
 
-    @Pattern(regexp = "[ ,.a-zA-ZøØæÆåÅ]+$", message = "Only characters allowed")
-    @Size(max = 300, message = "cannot exceed 300 characters")
     @Column(name = "exam_form")
     public String getExamForm()
     {
@@ -156,7 +140,7 @@ public class LocalCourse
         this.examForm = examForm;
     }
 
-    @OneToMany(mappedBy = "course" /*cascade = CascadeType.ALL, orphanRemoval = true*/)
+    @OneToMany(mappedBy = "course")
     public Set<TeacherCourse> getTeacherCourses()
     {
         return teacherCourses;
@@ -166,7 +150,7 @@ public class LocalCourse
         this.teacherCourses = teacherCourses;
     }
 
-    @OneToMany(mappedBy = "course" /*, cascade = CascadeType.ALL, orphanRemoval = true*/)
+    @OneToMany(mappedBy = "course")
     public Set<StudentCourse> getStudentCourses()
     {
         return studentCourses;
@@ -176,7 +160,7 @@ public class LocalCourse
         this.studentCourses = studentCourses;
     }
 
-    @OneToMany(mappedBy = "course"/*, cascade = CascadeType.ALL, orphanRemoval = true*/)
+    @OneToMany(mappedBy = "course")
     public Set<Application> getApplications()
     {
         return applications;

@@ -10,7 +10,6 @@ public class CourseRepositoryCustomImpl implements CourseRepositoryCustom
     private RestTemplate restTemplate = new RestTemplate();
     private final String LINK = "http://18.185.40.91/course";
 
-
     @Override
     public Course[] getCoursesLegacy()
     {

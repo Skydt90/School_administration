@@ -1,5 +1,6 @@
 package mandatory.school.administration.Controller;
 
+import mandatory.school.administration.Model.Application;
 import mandatory.school.administration.Model.Course;
 import mandatory.school.administration.Model.Student;
 import mandatory.school.administration.Services.Application.ApplicationService;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+
 @Controller
-@RequestMapping("/admin")
-public class AdminController
+@RequestMapping("/application")
+public class ApplicationController
 {
     @Autowired
     ApplicationService applicationService;
@@ -24,28 +27,39 @@ public class AdminController
     @Autowired
     CourseService courseService;
 
-    @GetMapping("/applications")
+    @GetMapping()
     public String applicationsOverview(Model model)
     {
-        model.addAttribute("applications", ApplicationUtilities.sortListAfterTimestamp(applicationService.getAllApplications()));
-        return "/Admin/applications";
+        ArrayList<Application> list = new ArrayList<>(ApplicationUtilities.sortListAfterTimestamp(applicationService.getAllApplications()));
+        for (Application a: list)
+        {
+            a.fillFullCourse(courseService);
+        }
+        model.addAttribute("applications", list);
+        return "/Application/overview";
     }
 
-    @GetMapping("/applicationsDetails")
+    @GetMapping("/details")
     public String applicationDetails(@RequestParam("studentId") int studentId, @RequestParam int courseId, Model model)
     {
         model.addAttribute("a", applicationService.getApplicationByStudentIdAndCourseId(studentId, courseId));
-        return "/Admin/applicationDetails";
+        return "/Application/details";
     }
 
-
-    @GetMapping("/acceptApplication")
+    @GetMapping("/accept")
     public String acceptApplication(@RequestParam("studentId") int studentId, @RequestParam("courseId") int courseId)
     {
         Student student = studentService.findStudentById(studentId);
         Course course = courseService.getFullCourseById(courseId);
 
         applicationService.acceptApplication(student, course, studentService, courseService);
-        return "redirect:applications";
+        return "redirect:/application";
+    }
+
+    @GetMapping("/decline")
+    public String declineStudent (@RequestParam int courseId, @RequestParam int studentId)
+    {
+        applicationService.removeSignup(studentService.findStudentById(studentId), courseId, studentService);
+        return "redirect:/application";
     }
 }

@@ -2,7 +2,6 @@ package mandatory.school.administration.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Set;
@@ -14,7 +13,6 @@ public class Student
 {
     private int id;
     private String name;
-
     private User user;
     private Set<StudentCourse> studentCourses;
     private Set<Application> applications;

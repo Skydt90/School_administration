@@ -1,10 +1,12 @@
 package mandatory.school.administration.Model;
 
+import mandatory.school.administration.Services.course.CourseService;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 @Entity
@@ -14,6 +16,7 @@ public class Application implements Serializable, Comparable<Application>
     private Student student;
     private LocalCourse course;
     private Date timestamp;
+    private Course fullCourse;
 
     @Id
     @ManyToOne
@@ -48,6 +51,23 @@ public class Application implements Serializable, Comparable<Application>
     public void setTimestamp(Date timestamp)
     {
         this.timestamp = timestamp;
+    }
+
+    @Transient
+    public Course getFullCourse()
+    {
+        return fullCourse;
+    }
+    public void setFullCourse(Course fullCourse)
+    {
+        this.fullCourse = fullCourse;
+    }
+
+    public void fillFullCourse(CourseService courseService)
+    {
+        ArrayList<LocalCourse> list = new ArrayList<>();
+        list.add(this.course);
+        this.setFullCourse(courseService.convertToFullCourses(list).get(0));
     }
 
     @Override

@@ -4,16 +4,215 @@
     <title>Course Overview</title>
     <link href="/CSS/kartotek_style.css" rel="stylesheet">
     <script src="https://kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
     <th:block th:include="_navigation"></th:block>
+    <script>
+        function details(id){
+            var modal = $("#details");
+            $.getJSON("http://localhost:8080/course/ajaxdetails?id=" + id,function (data,status) {
+                $("#danishName").text(data.nameDanish);
+                $("#englishName").text(data.nameEnglish);
+                $("#semester").text(data.semester);
+                $("#studyProgramme").text(data.studyProgramme);
+                $("#mandatory").text(data.mandatory);
+                $("#ects").text(data.ects);
+                $("#language").text(data.language);
+                $("#minimum").text(data.minimumStudents);
+                $("#expected").text(data.expectedStudents);
+                $("#maximum").text(data.maximumStudents);
+                $("#prerequisites").text(data.prerequisites);
+                $("#content").text(data.content);
+                $("#learningActivities").text(data.learningActivities);
+                $("#learningOutcome").text(data.learningOutcome);
+                $("#examForm").text(data.examForm);
+                console.log(status);
+                console.log(data);
+            });
+            modal.fadeIn("slow");
+        };
+        $(document).ready(function (){
+            $(".popupCloseButton").click(function () {
+                $("#details").hide();
+                $("#create").hide();
+            });
+            $("#btncreate").click(function () {
+                $("#create").fadeIn("slow");
+            });
+        });
+    </script>
+
+    <div data-role="popup" id="details" class="modal">
+        <div class="modal-content">
+            <div class="popupCloseButton">&times;</div>
+            <div class="container1">
+                <p><strong>Danish Name:</strong></p>
+                <p id="danishName"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>English Name:</strong></p>
+                <p id="englishName"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Semester:</strong></p>
+                <p id="semester"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Study Programme:</strong></p>
+                <p id="studyProgramme"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Mandatory:</strong></p>
+                <p id="mandatory"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>ECTS Points:</strong></p>
+                <p id="ects"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Language:</strong></p>
+                <p id="language"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Minimum Students:</strong></p>
+                <p id="minimum"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Expected Students:</strong></p>
+                <p id="expected"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Maximum Students:</strong></p>
+                <p id="maximum"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Prerequisites:</strong></p>
+                <p id="prerequisites"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Learning Outcome:</strong></p>
+                <p id="learningOutcome"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Content:</strong></p>
+                <p id="content"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Learning Activites:</strong></p>
+                <p id="learningActivities"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Exam form:</strong></p>
+                <p id="examForm"></p>
+            </div>
+            <br>
+        </div>
+    </div>
+
+    <div th:if="${showable}" id="create" style="display: none" class="modal">
+        <div class="modal-content">
+            <div class="popupCloseButton">&times;</div>
+            <form th:action="@{/course/create}" th:object="${course}" method="post">
+                <section>
+                    <b>Danish Name:</b>
+                    <input type="text" th:field="${course.nameDanish}" />
+                    <div th:if="${#fields.hasErrors('nameDanish')}" class="error" th:errors="*{nameDanish}"></div>
+                    <br>
+                    <b>English Name:</b>
+                    <input type="text" th:field="${course.nameEnglish}" />
+                    <div th:if="${#fields.hasErrors('nameEnglish')}" class="error" th:errors="*{nameEnglish}"></div>
+                    <br>
+                    <b>Semester:</b>
+                    <input type="number" th:field="${course.semester}" />
+                    <div th:if="${#fields.hasErrors('semester')}" class="error" th:errors="*{semester}"></div>
+                    <br>
+                    <b>Study Programme:</b>
+                    <input type="text" th:field="${course.studyProgramme}" />
+                    <div th:if="${#fields.hasErrors('studyProgramme')}" class="error" th:errors="*{studyProgramme}"></div>
+                    <br>
+                    <b>Description:</b>
+                    <input type="text" th:field="${course.description}" />
+                    <div th:if="${#fields.hasErrors('description')}" class="error" th:errors="*{description}"></div>
+                    <br>
+                    <b>Mandatory:</b>
+                    <input type="text" th:field="${course.mandatory}" />
+                    <div th:if="${#fields.hasErrors('mandatory')}" class="error" th:errors="*{mandatory}"></div>
+                    <br>
+                    <b>ECTS:</b>
+                    <input type="number" th:field="${course.ECTS}" />
+                    <div th:if="${#fields.hasErrors('ECTS')}" class="error" th:errors="*{ECTS}"></div>
+                    <br>
+                    <b>Language:</b>
+                    <select th:field="${course.language}">
+                        <option th:value="Danish" th:text="Danish"/>
+                        <option th:value="English" th:text="English"/>
+                    </select>
+                    <br>
+                    <b>Minimum Students:</b>
+                    <input type="number" th:field="${course.localCourse.minimumStudents}" />
+                    <div th:if="${#fields.hasErrors('localCourse.minimumStudents')}" class="error" th:errors="*{minimumStudents}"></div>
+                    <br>
+                    <b>Expected Students:</b>
+                    <input type="number" th:field="${course.localCourse.expectedStudents}" />
+                    <div th:if="${#fields.hasErrors('localCourse.expectedStudents')}" class="error" th:errors="*{expectedStudents}"></div>
+                    <br>
+                    <b>Maximum Students:</b>
+                    <input type="number" th:field="${course.localCourse.maximumStudents}" />
+                    <div th:if="${#fields.hasErrors('localCourse.maximumStudents')}" class="error" th:errors="*{maximumStudents}"></div>
+                    <br>
+                    <b>Prerequisites:</b>
+                    <input type="text" th:field="${course.localCourse.prerequisites}" />
+                    <div th:if="${#fields.hasErrors('localCourse.prerequisites')}" class="error" th:errors="*{prerequisites}"></div>
+                    <br>
+                    <b>Learning Outcome:</b>
+                    <input type="text" th:field="${course.localCourse.learningOutcome}" />
+                    <div th:if="${#fields.hasErrors('localCourse.learningOutcome')}" class="error" th:errors="*{learningOutcome}"></div>
+                    <br>
+                    <b>Content:</b>
+                    <input type="text" th:field="${course.localCourse.content}" />
+                    <div th:if="${#fields.hasErrors('localCourse.content')}" class="error" th:errors="*{content}"></div>
+                    <br>
+                    <b>Learning Activities:</b>
+                    <input type="text" th:field="${course.localCourse.learningActivities}" />
+                    <div th:if="${#fields.hasErrors('localCourse.learningActivities')}" class="error" th:errors="*{learningActivities}"></div>
+                    <br>
+                    <b>Exam form:</b>
+                    <input type="text" th:field="${course.localCourse.examForm}" />
+                    <div th:if="${#fields.hasErrors('localCourse.examForm')}" class="error" th:errors="*{examForm}"></div>
+                    <br>
+                    <b>Number of teachers:</b>
+                    <input type="number" th:field="${course.numberOfTeachers}" />
+                    <div th:if="${#fields.hasErrors('numberOfTeachers')}" class="error" th:errors="*{numberOfTeachers}"></div>
+                    <br>
+                  </section>
+                <br>
+                <input type="submit" value="Submit" class="btn btn-create btn:hover"/>
+                <br>
+            </form>
+        </div>
+    </div>
 
     <div class="container">
         <header>
             <h1>Course Overview</h1>
         </header>
 
-        <a type="button" href="/course/create" class="btn btn-create btn:hover">Create</a>
+        <input th:if="${showable}" th:value="Create" type="button" class="btn btn-create btn:hover" id="btncreate">
         <p th:text="'Total Amount of Courses:' + ' ' + ${count}"></p>
 
         <p></p>
@@ -34,7 +233,8 @@
                 <td th:text="${course.language}"></td>
                 <td th:text="${course.ECTS}"></td>
                 <td>
-                    <a th:href="${'/course/details?id='+ course.id}" type="button" class="btn btn-ed btn:hover">Details</a>
+                    <button th:onclick="'javascript:details(' + ${course.id} + ')'" class="btn btn-ed btn:hover">Details</button>
+                    <a type="button" class="btn btn-ed btn:hover" th:href="${'/course/details?id=' + course.id}">More</a>
                 </td>
             </tr>
             </tbody>

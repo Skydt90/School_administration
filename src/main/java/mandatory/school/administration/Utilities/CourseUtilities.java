@@ -1,6 +1,8 @@
 package mandatory.school.administration.Utilities;
 
 import mandatory.school.administration.Model.*;
+import mandatory.school.administration.Services.course.CourseService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -9,6 +11,9 @@ import java.util.Set;
 @Component
 public class CourseUtilities
 {
+    @Autowired
+    CourseService courseService;
+
     public TeacherCourse getTeacherCourseByTeacherIdAndCourseId(int teacherId, int courseId, Set<TeacherCourse> teacherCourses)
     {
         TeacherCourse teacherCourse = null;
@@ -50,10 +55,11 @@ public class CourseUtilities
         return application;
     }
 
-    public List<LocalCourse> getCoursesStudentHaveNotSignedupFor(List<LocalCourse> courses, List<LocalCourse> appliedCourses, List<LocalCourse> enrolledCourses)
+    public List<Course> getCoursesStudentHaveNotSignedUpFor(List<LocalCourse> courses, List<LocalCourse> appliedCourses,
+                                                            List<LocalCourse> enrolledCourses)
     {
         courses.removeAll(appliedCourses);
         courses.removeAll(enrolledCourses);
-        return courses;
+        return courseService.convertToFullCourses(courses);
     }
 }

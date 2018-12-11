@@ -27,11 +27,11 @@
             <tbody>
             <tr th:each="a: ${applications}">
                 <td th:text="${a.student.name}"></td>
-                <td th:text="${a.course.nameDanish}"></td>
-                <td th:text="${a.course.nameEnglish}"></td>
+                <td th:text="${a.fullCourse.nameDanish}"></td>
+                <td th:text="${a.fullCourse.nameEnglish}"></td>
                 <td th:text="${a.timestamp}"></td>
                 <td>
-                    <a th:href="${'/admin/applicationsDetails?studentId='+ a.student.id + '&courseId=' + a.course.id}" type="button" class="btn btn-ed btn:hover">Details</a>
+                    <a th:href="${'/application/details?studentId='+ a.student.id + '&courseId=' + a.course.id}" type="button" class="btn btn-ed btn:hover">Details</a>
                 </td>
             </tr>
             </tbody>

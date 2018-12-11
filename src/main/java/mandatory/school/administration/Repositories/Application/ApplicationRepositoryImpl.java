@@ -4,8 +4,6 @@ import mandatory.school.administration.Model.Application;
 import mandatory.school.administration.Model.Student;
 import mandatory.school.administration.Repositories.student.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -18,7 +16,6 @@ public class ApplicationRepositoryImpl implements ApplicationRepository
 {
     @Autowired
     StudentRepository repository;
-
 
     @Override
     public List<Application> findAllApplications()

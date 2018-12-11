@@ -12,11 +12,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 {
-
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
-    // Hashing
     @Bean
     public BCryptPasswordEncoder passwordEncoder()
     {
@@ -30,17 +28,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
         http.csrf().disable();
 
         //Free pages
-        http.authorizeRequests().antMatchers("/login","/logout","/fail").permitAll();
+        http.authorizeRequests().antMatchers("/login", "/logout", "/course/ajaxdetails*", "/fail").permitAll();
 
         //Can be accessed by all
-        http.authorizeRequests().antMatchers("/home","/","/course","/course/details*","/student",
-                "/student/details*","/teacher","/teacher/details*").access("isAuthenticated()");
+        http.authorizeRequests().antMatchers("/home", "/", "/course", "/course/details*",
+                "/student", "/student/*", "/teacher", "/teacher/details*").access("isAuthenticated()");
 
         //For teacher only
-        http.authorizeRequests().antMatchers("/course/*").access("hasAnyAuthority('admin','teacher')");
+        http.authorizeRequests().antMatchers("/course/create", "/course/edit").access("hasAnyAuthority('admin','teacher')");
 
         //For admins only
-        http.authorizeRequests().antMatchers("/teacher*","/student*","/application*").hasAuthority("admin");
+        http.authorizeRequests().antMatchers("/teacher/*", "/application*", "/course/*").hasAuthority("admin");
 
         //Acces denied page
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/fail");

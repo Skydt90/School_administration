@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<HTML>
 <head>
     <meta charset="UTF-8">
     <title>Course Details</title>
@@ -14,7 +15,7 @@
 
         <section>
             <div>
-                <a type="button" href="/course/" class="btn btn-del btn:hover">Return</a>
+                <a type="button" href="/course" class="btn btn-del btn:hover">Return</a>
                 <a type="button" th:href="${'/course/edit?courseId=' + course.id}" class="btn btn-ed btn:hover">Edit</a>
             </div>
             <br>
@@ -101,15 +102,12 @@
 
             <div>
                 <h1>Registered Students</h1>
-                <p></p>
-                <a type="button" href="/course/addStudent" class="btn btn-create btn:hover">Add</a>
-                <p></p>
                 <table class="sortable" id="tableStudents">
                     <thead>
                     <tr>
                         <th>Name</th>
                         <th>Username</th>
-                        <th>User Type</th>
+                        <th>Usertype</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -138,7 +136,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Username</th>
-                        <th>user Type</th>
+                        <th>Usertype</th>
                         <th></th>
                     </tr>
                     </thead>

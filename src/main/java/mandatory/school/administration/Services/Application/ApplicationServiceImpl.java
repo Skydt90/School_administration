@@ -17,11 +17,17 @@ public class ApplicationServiceImpl implements ApplicationService
 {
     @Autowired
     ApplicationRepository repository;
+    @Autowired
+    CourseService courseService;
 
     @Override
     public Application getApplicationByStudentIdAndCourseId(int studentId, int courseId)
     {
-        return repository.findApplicationByStudentIdAndCourseId(studentId, courseId);
+        Application value = repository.findApplicationByStudentIdAndCourseId(studentId, courseId);
+        ArrayList<LocalCourse> list = new ArrayList<>();
+        list.add(value.getCourse());
+        value.setFullCourse(courseService.convertToFullCourses(list).get(0));
+        return value;
     }
 
     @Override

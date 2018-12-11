@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CourseService
 {
-    LocalCourse createLocalCourse(LocalCourse course);
+    void createLocalCourse(LocalCourse course);
 
     Course createCourseLegacy(Course course);
 
@@ -19,8 +19,6 @@ public interface CourseService
 
     void deleteCourseById(int id);
 
-    void saveAll(List<LocalCourse> courses);
-
     List<LocalCourse> getAllCourses();
 
     List<Course> getAllCoursesLegacy();
@@ -29,14 +27,17 @@ public interface CourseService
 
     List<LocalCourse> getAllCoursesStudentHasEnrolled(int studentId);
 
+    List<Course> convertToFullCourses(List<LocalCourse> localCourses);
+
     void updateCourses();
 
     List<Course> getFullCourses();
 
     Course getFullCourseById(int id);
 
-    long countCourses();
+    boolean getIsShowAbleBasedOnAuthority();
 
     void removeTeacherFromCourse(int teacherId, int courseId);
+
     void removeStudentFromCourse(int studentid, int courseId);
 }

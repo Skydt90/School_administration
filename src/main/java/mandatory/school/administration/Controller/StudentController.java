@@ -1,5 +1,6 @@
 package mandatory.school.administration.Controller;
 
+import mandatory.school.administration.Model.Application;
 import mandatory.school.administration.Model.Course;
 import mandatory.school.administration.Model.Student;
 import mandatory.school.administration.Services.Application.ApplicationService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/student")
@@ -32,23 +34,28 @@ public class StudentController
     public String details(Model model, Principal principal)
     {
         Student student = studentService.findStudentByUsername(principal.getName());
+        ArrayList<Application> applications = new ArrayList<>(student.getApplications());
+        for (Application a: applications)
+        {
+            a.fillFullCourse(courseService);
+        }
+
         model.addAttribute("student", student);
-        model.addAttribute("courses", courseService.getAllCoursesStudentHasEnrolled(student.getId()));
-        model.addAttribute("applications", student.getApplications());
+        model.addAttribute("courses", courseService.convertToFullCourses(courseService.getAllCoursesStudentHasEnrolled(student.getId())));
+        model.addAttribute("applications", applications);
         return "/Student/details";
     }
-
 
     @GetMapping("/applyForCourse")
     public String applyForCourse(Model model, @RequestParam int studentId)
     {
         Student student = studentService.findStudentById(studentId);
+
         model.addAttribute("studentId", student.getId());
-        model.addAttribute("courses",
-                courseUtilities.getCoursesStudentHaveNotSignedupFor(
-                        courseService.getAllCourses(),
-                        courseService.getAllCoursesStudentHasApplied(studentId),
-                        courseService.getAllCoursesStudentHasEnrolled(studentId)));
+        model.addAttribute("courses", courseUtilities.getCoursesStudentHaveNotSignedUpFor(
+                courseService.getAllCourses(),
+                courseService.getAllCoursesStudentHasApplied(studentId),
+                courseService.getAllCoursesStudentHasEnrolled(studentId)));
         return "/Student/applyForCourse";
     }
 
@@ -57,7 +64,6 @@ public class StudentController
     {
         Course course = courseService.getFullCourseById(courseId);
         Student student = studentService.findStudentById(studentId);
-
         applicationService.createApplication(student, course, studentService, courseService);
         return "redirect:/student";
     }

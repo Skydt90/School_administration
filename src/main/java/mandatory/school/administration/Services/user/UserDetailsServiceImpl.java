@@ -15,15 +15,11 @@ import java.util.List;
 @Component(value="userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService
 {
-    /*
-    Fields
-     */
+
     @Autowired
     private UserService userService;
 
-    /*
-    Methods
-     */
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {

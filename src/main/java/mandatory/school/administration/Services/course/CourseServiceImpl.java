@@ -7,10 +7,14 @@ import mandatory.school.administration.Model.TeacherCourse;
 import mandatory.school.administration.Repositories.course.CourseRepository;
 import mandatory.school.administration.Utilities.CourseUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -25,9 +29,9 @@ public class CourseServiceImpl implements CourseService
 
 
     @Override
-    public LocalCourse createLocalCourse(LocalCourse course)
+    public void createLocalCourse(LocalCourse course)
     {
-        return repository.save(course);
+        repository.save(course);
     }
 
     @Override
@@ -60,7 +64,6 @@ public class CourseServiceImpl implements CourseService
         repository.deleteById(id);
     }
 
-
     @Override
     public List<LocalCourse> getAllCourses()
     {
@@ -74,12 +77,6 @@ public class CourseServiceImpl implements CourseService
     }
 
     @Override
-    public void saveAll(List<LocalCourse> courses)
-    {
-        repository.saveAll(courses);
-    }
-
-    @Override
     public List<LocalCourse> getAllCoursesStudentHasApplied(int studentId)
     {
         return new ArrayList<>(repository.findAllByApplications_studentId(studentId));
@@ -88,13 +85,20 @@ public class CourseServiceImpl implements CourseService
     @Override
     public List<LocalCourse> getAllCoursesStudentHasEnrolled(int studentId)
     {
-        return new ArrayList<>(repository.findAllByStudentCourses_studentId(studentId));
+        return repository.findAllByStudentCourses_studentId(studentId);
     }
 
     @Override
-    public long countCourses()
+    public List<Course> convertToFullCourses(List<LocalCourse> localCourses)
     {
-        return repository.count();
+        List<Course> value = new ArrayList<>();
+
+        for (LocalCourse lc: localCourses)
+        {
+            value.add(getFullCourseById(lc.getId()));
+        }
+
+        return value;
     }
 
     @Override
@@ -117,6 +121,8 @@ public class CourseServiceImpl implements CourseService
         editCourse(course);
     }
 
+    @Scheduled(fixedRate = 3600 * 1000)
+    @Override
     public void updateCourses()
     {
         courses = getAllCoursesLegacy();
@@ -124,7 +130,7 @@ public class CourseServiceImpl implements CourseService
 
         if (localCourses.size() < courses.size())
         {
-            for (int i = localCourses.size(); i <= courses.size(); i++)
+            for (int i = localCourses.size(); i < courses.size(); i++)
             {
                 LocalCourse lc = new LocalCourse (i + 1);
                 localCourses.add(lc);
@@ -138,6 +144,7 @@ public class CourseServiceImpl implements CourseService
         }
     }
 
+    @Override
     public List<Course> getFullCourses()
     {
         return courses;
@@ -147,5 +154,21 @@ public class CourseServiceImpl implements CourseService
     public Course getFullCourseById(int id)
     {
         return courses.get(id - 1);
+    }
+
+    @Override
+    public boolean getIsShowAbleBasedOnAuthority()
+    {
+        Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>)
+                SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+
+        for (SimpleGrantedAuthority a: authorities)
+        {
+            if(a.getAuthority().equals("admin") || a.getAuthority().equals("teacher"))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
