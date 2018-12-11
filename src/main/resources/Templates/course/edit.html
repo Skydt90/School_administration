@@ -41,7 +41,7 @@
             <input type="text" th:field="${course.description}" value="${course.description}" />
             <div th:if="${#fields.hasErrors('description')}" class="error" th:errors="*{description}"></div>
             <br>
-            <b>Mandatory:</b>
+            <b>Mandatory</b>
             <select th:field="${course.mandatory}" value="${course.mandatory}">
                 <option th:value="true" th:text="true"/>
                 <option th:value="false" th:text="false"/>
@@ -51,6 +51,11 @@
             <b>ECTS</b>
             <input type="number" th:field="${course.ECTS}" value="${course.ECTS}" />
             <div th:if="${#fields.hasErrors('ECTS')}" class="error" th:errors="*{ECTS}"></div>
+            <br>
+
+            <b>Number of Teachers</b>
+            <input type="number" th:field="${course.numberOfTeachers}" value="${course.numberOfTeachers}" />
+            <div th:if="${#fields.hasErrors('numberOfTeachers')}" class="error" th:errors="*{numberOfTeachers}"></div>
             <br>
             <b>Language</b>
             <select th:field="${course.language}" value="${course.language}">
@@ -83,8 +88,6 @@
             <b>Exam form</b>
             <input type="text" th:field="${course.localCourse.examForm}" value="${course.localCourse.examForm}" required/>
             <br>
-            <b>Description</b>
-            <input type="text" th:field="${course.description}" value="${course.description}" required/>
         </section>
         <br>
         <a th:href="${'/course/details?id=' + course.id}" type="button" class="btn btn-del btn:hover">Cancel</a>

@@ -47,11 +47,16 @@
                 <input type="number" th:field="${course.ECTS}" />
                 <div th:if="${#fields.hasErrors('ECTS')}" class="error" th:errors="*{ECTS}"></div>
                 <br>
+                <b>Number of teachers:</b>
+                <input type="number" th:field="${course.numberOfTeachers}" />
+                <div th:if="${#fields.hasErrors('numberOfTeachers')}" class="error" th:errors="*{numberOfTeachers}"></div>
+                <br>
                 <b>Language:</b>
                 <select th:field="${course.language}">
                     <option th:value="Danish" th:text="Danish"/>
                     <option th:value="English" th:text="English"/>
                 </select>
+                <div th:if="${#fields.hasErrors('language')}" class="error" th:errors="*{language}"></div>
                 <br>
                 <b>Minimum Students:</b>
                 <input type="number" th:field="${course.localCourse.minimumStudents}" required/>
@@ -77,10 +82,7 @@
                 <b>Exam form:</b>
                 <input type="text" th:field="${course.localCourse.examForm}" required/>
                 <br>
-                <b>Number of teachers:</b>
-                <input type="number" th:field="${course.numberOfTeachers}" />
-                <div th:if="${#fields.hasErrors('numberOfTeachers')}" class="error" th:errors="*{numberOfTeachers}"></div>
-                <br>
+
             </section>
             <br>
             <a href="/course" type="button" class="btn btn-del btn:hover">Cancel</a>

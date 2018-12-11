@@ -72,6 +72,7 @@ public class CourseController
                     "\n\t\"minimumStudents\" :\"" + response.getLocalCourse().getMinimumStudents() + "\"," +
                     "\n\t\"expectedStudents\" :\"" + response.getLocalCourse().getExpectedStudents() + "\"," +
                     "\n\t\"maximumStudents\" :\"" + response.getLocalCourse().getMaximumStudents() + "\"," +
+                    "\n\t\"numberOfTeachers\" :\"" + response.getNumberOfTeachers() + "\"," +
                     "\n\t\"prerequisites\" :\"" + response.getLocalCourse().getPrerequisites() + "\"," +
                     "\n\t\"learningOutcome\" :\"" + response.getLocalCourse().getLearningOutcome() + "\"," +
                     "\n\t\"content\" :\"" + response.getDescription() + "\"," +
