@@ -75,7 +75,7 @@ public class CourseController
                     "\n\t\"numberOfTeachers\" :\"" + response.getNumberOfTeachers() + "\"," +
                     "\n\t\"prerequisites\" :\"" + response.getLocalCourse().getPrerequisites() + "\"," +
                     "\n\t\"learningOutcome\" :\"" + response.getLocalCourse().getLearningOutcome() + "\"," +
-                    "\n\t\"content\" :\"" + response.getDescription() + "\"," +
+                    "\n\t\"content\" :\"" + response.getLocalCourse().getContent() + "\"," +
                     "\n\t\"learningActivities\" :\"" + response.getLocalCourse().getLearningActivities() + "\"," +
                     "\n\t\"examForm\" :\"" + response.getLocalCourse().getExamForm() + "\"" +
                     "\n}";

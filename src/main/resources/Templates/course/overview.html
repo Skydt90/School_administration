@@ -14,6 +14,7 @@
             $.getJSON("http://localhost:8080/course/ajaxdetails?id=" + id,function (data,status) {
                 $("#danishName").text(data.nameDanish);
                 $("#englishName").text(data.nameEnglish);
+                $("#description").text(data.description);
                 $("#semester").text(data.semester);
                 $("#studyProgramme").text(data.studyProgramme);
                 $("#mandatory").text(data.mandatory);
@@ -55,6 +56,11 @@
             <div class="container1">
                 <p><strong>English Name:</strong></p>
                 <p id="englishName"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Description:</strong></p>
+                <p id="description"></p>
             </div>
             <br>
             <div class="container1">
