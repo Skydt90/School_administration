@@ -32,13 +32,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 
         //Can be accessed by all
         http.authorizeRequests().antMatchers("/home", "/", "/course", "/course/details*",
-                "/student", "/student/*", "/teacher", "/teacher/details*").access("isAuthenticated()");
+                                    "/teacher", "/teacher/details*").access("isAuthenticated()");
 
         //For teacher only
         http.authorizeRequests().antMatchers("/course/create", "/course/edit").access("hasAnyAuthority('admin','teacher')");
 
         //For admins only
         http.authorizeRequests().antMatchers("/teacher/*", "/application*", "/course/*").hasAuthority("admin");
+
+        //For student only
+        http.authorizeRequests().antMatchers("/student").hasAuthority("student");
 
         //Acces denied page
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/fail");

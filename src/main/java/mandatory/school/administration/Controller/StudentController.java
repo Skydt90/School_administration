@@ -30,7 +30,7 @@ public class StudentController
     @Autowired
     ApplicationService applicationService;
 
-    @GetMapping("")
+    @GetMapping()
     public String details(Model model, Principal principal)
     {
         Student student = studentService.findStudentByUsername(principal.getName());

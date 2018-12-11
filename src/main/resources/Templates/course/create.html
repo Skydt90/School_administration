@@ -37,7 +37,10 @@
                 <div th:if="${#fields.hasErrors('description')}" class="error" th:errors="*{description}"></div>
                 <br>
                 <b>Mandatory:</b>
-                <input type="text" th:field="${course.mandatory}" />
+                <select th:field="${course.mandatory}">
+                    <option th:value="true" th:text="true"/>
+                    <option th:value="false" th:text="false"/>
+                </select>
                 <div th:if="${#fields.hasErrors('mandatory')}" class="error" th:errors="*{mandatory}"></div>
                 <br>
                 <b>ECTS:</b>
@@ -49,39 +52,31 @@
                     <option th:value="Danish" th:text="Danish"/>
                     <option th:value="English" th:text="English"/>
                 </select>
-                <div th:if="${#fields.hasErrors('language')}" class="error" th:errors="*{language}"></div>
                 <br>
                 <b>Minimum Students:</b>
-                <input type="number" th:field="${course.localCourse.minimumStudents}" />
-                <div th:if="${#fields.hasErrors('localCourse.minimumStudents')}" class="error" th:errors="*{localCourse.minimumStudents}"></div>
+                <input type="number" th:field="${course.localCourse.minimumStudents}" required/>
                 <br>
                 <b>Expected Students:</b>
-                <input type="number" th:field="${course.localCourse.expectedStudents}" />
-                <div th:if="${#fields.hasErrors('localCourse.expectedStudents')}" class="error" th:errors="*{localCourse.expectedStudents}"></div>
+                <input type="number" th:field="${course.localCourse.expectedStudents}" required/>
                 <br>
                 <b>Maximum Students:</b>
-                <input type="number" th:field="${course.localCourse.maximumStudents}" />
-                <div th:if="${#fields.hasErrors('localCourse.maximumStudents')}" class="error" th:errors="*{localCourse.maximumStudents}"></div>
+                <input type="number" th:field="${course.localCourse.maximumStudents}" required/>
                 <br>
                 <b>Prerequisites:</b>
-                <input type="text" th:field="${course.localCourse.prerequisites}" />
-                <div th:if="${#fields.hasErrors('localCourse.prerequisites')}" class="error" th:errors="*{localCourse.prerequisites}"></div>
+                <input type="text" th:field="${course.localCourse.prerequisites}" required/>
                 <br>
                 <b>Learning Outcome:</b>
-                <input type="text" th:field="${course.localCourse.learningOutcome}" />
-                <div th:if="${#fields.hasErrors('localCourse.learningOutcome')}" class="error" th:errors="*{localCourse.learningOutcome}"></div>
+                <input type="text" th:field="${course.localCourse.learningOutcome}" required/>
                 <br>
                 <b>Content:</b>
-                <input type="text" th:field="${course.localCourse.content}" />
-                <div th:if="${#fields.hasErrors('localCourse.content')}" class="error" th:errors="*{localCourse.content}"></div>
+                <input type="text" th:field="${course.localCourse.content}" required/>
                 <br>
                 <b>Learning Activities:</b>
-                <input type="text" th:field="${course.localCourse.learningActivities}" />
-                <div th:if="${#fields.hasErrors('localCourse.learningActivities')}" class="error" th:errors="*{localCourse.learningActivities}"></div>
+                <input type="text" th:field="${course.localCourse.learningActivities}" required/>
                 <br>
                 <b>Exam form:</b>
-                <input type="text" th:field="${course.localCourse.examForm}" />
-                <div th:if="${#fields.hasErrors('localCourse.examForm')}" class="error" th:errors="*{localCourse.examForm}"></div>
+                <input type="text" th:field="${course.localCourse.examForm}" required/>
+                <br>
                 <b>Number of teachers:</b>
                 <input type="number" th:field="${course.numberOfTeachers}" />
                 <div th:if="${#fields.hasErrors('numberOfTeachers')}" class="error" th:errors="*{numberOfTeachers}"></div>

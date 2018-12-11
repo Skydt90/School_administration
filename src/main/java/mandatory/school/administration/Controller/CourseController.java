@@ -108,7 +108,7 @@ public class CourseController
     {
         if (bindingResult.hasErrors())
         {
-            return "/course/details?id=" + course.getId();
+            return "redirect:/course/edit?id=" + course.getId();
         }
         courseService.editCourse(course.getLocalCourse());
         courseService.createCourseLegacy(course);

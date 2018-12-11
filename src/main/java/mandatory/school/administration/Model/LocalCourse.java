@@ -57,7 +57,7 @@ public class LocalCourse
         this.id = id;
     }
 
-    @Max(value  = 45, message = "cannot exceed 45 students")
+    @Max(value  = 50, message = "cannot exceed 50 students")
     @Column(name = "minimum_students")
     public int getMinimumStudents()
     {
@@ -68,7 +68,7 @@ public class LocalCourse
         this.minimumStudents = minimumStudents;
     }
 
-    @Max(value  = 45, message = "cannot exceed 45 students")
+    @Max(value  = 50, message = "cannot exceed 50 students")
     @Column(name = "expected_students")
     public int getExpectedStudents()
     {
@@ -79,7 +79,7 @@ public class LocalCourse
         this.expectedStudents = expectedStudents;
     }
 
-    @Max(value  = 45, message = "cannot exceed 45 students")
+    @Max(value  = 50, message = "cannot exceed 50 students")
     @Column(name = "maximum_students")
     public int getMaximumStudents()
     {
