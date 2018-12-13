@@ -3,6 +3,10 @@
 This repository contains the source code for our final mandatory assignment on the 3. semester in the computer science study programme at KEA. Below is a section descriping how to deploy the system followed by a list of requirements and a brief description of our solution to those requirements.
 
 ## Deployment:
+1. Clone repo
+2. Build Project using IntelliJ
+3. Run project
+4. Open browser at localhost:8080
 
 ## Requirements:
 **1. CRUD for course, including a list with students assigned to that course** 
