@@ -21,8 +21,11 @@ Fully implemented using the Spring Security framework.
 
 Mostly implemented using JPA and Spring Secruity with a few minor exceptions. 
 
-Auto update of the content on pages when need it (jQuery)
-A user-friendly design.
-Call against the provided Web-Service to fetch some of the content (Teachers & Courses) use the swagger documentation for the details. 
-When you add/update a new Teacher or Course to your backend, the newly added/updated resource should also be reflected in the legacy system.
+**4. Auto update of the content on pages when needed(jQuery)**
+
+
+**5. Call against the provided Web-Service to fetch some of the content (Teachers & Courses)**
+
+
+**6.When you add/update a new Teacher or Course to your backend, the newly added/updated resource should also be reflected in the legacy system.**
 
