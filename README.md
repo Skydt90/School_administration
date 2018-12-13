@@ -9,20 +9,20 @@ This repository contains the source code for our final mandatory assignment on t
 4. Open browser at localhost:8080
 
 ## Requirements:
-**1. CRUD for course, including a list with students assigned to that course.** 
+### 1. CRUD for course, including a list with students assigned to that course.
 Everything here is implemented with the exception of the delete part. The entirety of this requirement was solved using an implementation of JPA in Spring Boot with a few custom implementations to make everything work.
 
-**2. Login for each type of the user.**
+### 2. Login for each type of the user.
 Fully implemented using the Spring Security framework.
 
-**3. All the requirements for the different type of user.**
-Mostly implemented using JPA and Spring Secruity with a few minor exceptions. 
+### 3. All the requirements for the different type of user.
+Mostly implemented using JPA and Spring Secruity with a few minor exceptions. En example would be that a teacher is not only restricted to edit his own courses or the ones he teaches, but everything.
 
-**4. Auto update of the content on pages when needed(jQuery).**
-
-
-**5. Call against the provided Web-Service to fetch some of the content (Teachers & Courses).**
+### 4. Auto update of the content on pages when needed(jQuery).
 
 
-**6. When you add/update a new Teacher or Course to your backend, the newly added/updated resource should also be reflected in the legacy system.**
+### 5. Call against the provided Web-Service to fetch some of the content (Teachers & Courses).
+
+
+### 6. When you add/update a new Teacher or Course to your backend, the newly added/updated resource should also be reflected in the legacy system.
 
