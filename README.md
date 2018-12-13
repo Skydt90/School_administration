@@ -5,12 +5,14 @@ This repository contains the source code for our final mandatory assignment on t
 # Must-have requirements:
 1: CRUD for course, including a list with students assigned to that course. 
 
-Everything here is implemented with the exception of the delete part. The entirety of this requirement was solved using an implementation of JPA in Spring Boot with a few custom implementations to make everything work. \textbf{greatest} 
+Everything here is implemented with the exception of the delete part. The entirety of this requirement was solved using an implementation of JPA in Spring Boot with a few custom implementations to make everything work.
 
+2: Login for each type of the user.
 
+Fully implemented using the Spring Security framework.
 
-Login for each type of the user
-All the requirements for the different type of user
+3: All the requirements for the different type of user
+
 Auto update of the content on pages when need it (jQuery)
 A user-friendly design.
 Call against the provided Web-Service to fetch some of the content (Teachers & Courses) use the swagger documentation for the details. 
