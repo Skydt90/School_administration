@@ -1,17 +1,19 @@
 # KEA School Administration
 
-This repository contains the source code for our final mandatory assignment on the 3. semester in the computer science study programme at KEA. Following is a list of requiredments and a brief description of our solution to those requirements.
+This repository contains the source code for our final mandatory assignment on the 3. semester in the computer science study programme at KEA. Below is a section descriping how to deploy the system followed by a list of requirements and a brief description of our solution to those requirements.
+
+## Deployment:
 
 ## Requirements:
 **1: CRUD for course, including a list with students assigned to that course** 
 
 Everything here is implemented with the exception of the delete part. The entirety of this requirement was solved using an implementation of JPA in Spring Boot with a few custom implementations to make everything work.
 
-2: Login for each type of the user.
+**2: Login for each type of the user.**
 
 Fully implemented using the Spring Security framework.
 
-3: All the requirements for the different type of user
+**3: All the requirements for the different type of user**
 
 Auto update of the content on pages when need it (jQuery)
 A user-friendly design.
