@@ -11,7 +11,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -89,6 +88,12 @@ public class CourseServiceImpl implements CourseService
     }
 
     @Override
+    public List<LocalCourse> getAllCoursesTeacherAreTeaching(int teacherId)
+    {
+        return repository.findAllByTeacherCourses_teacherId(teacherId);
+    }
+
+    @Override
     public List<Course> convertToFullCourses(List<LocalCourse> localCourses)
     {
         List<Course> value = new ArrayList<>();
@@ -102,7 +107,7 @@ public class CourseServiceImpl implements CourseService
     }
 
     @Override
-    public void removeTeacherFromCourse(int teacherId, int courseId)
+    public void removeTeacherFromCourse(int courseId, int teacherId)
     {
         LocalCourse course = findCourseById(courseId);
 
@@ -112,7 +117,7 @@ public class CourseServiceImpl implements CourseService
     }
 
     @Override
-    public void removeStudentFromCourse(int studentId, int courseId)
+    public void removeStudentFromCourse(int courseId, int studentId)
     {
         LocalCourse course = findCourseById(courseId);
 
@@ -157,7 +162,7 @@ public class CourseServiceImpl implements CourseService
     }
 
     @Override
-    public boolean getIsShowAbleBasedOnAuthority()
+    public boolean getIsTeacherOrAdmin()
     {
         Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>)
                 SecurityContextHolder.getContext().getAuthentication().getAuthorities();
@@ -165,6 +170,22 @@ public class CourseServiceImpl implements CourseService
         for (SimpleGrantedAuthority a: authorities)
         {
             if(a.getAuthority().equals("admin") || a.getAuthority().equals("teacher"))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean getIsAdmin()
+    {
+        Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>)
+                SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+
+        for (SimpleGrantedAuthority a: authorities)
+        {
+            if(a.getAuthority().equals("admin"))
             {
                 return true;
             }

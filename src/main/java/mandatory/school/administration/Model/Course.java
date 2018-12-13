@@ -16,13 +16,13 @@ public class Course
     private String nameEnglish;
     private String studyProgramme;
     private String mandatory;
-    private int ECTS;
+    private String ECTS;
     private String language;
     private LocalCourse localCourse;
 
     public Course(){}
 
-    public Course(int id, int semester, int numberOfTeachers, String description, String nameDanish, String nameEnglish, String studyProgramme, String mandatory, int ECTS, String language, LocalCourse localCourse)
+    public Course(int id, int semester, int numberOfTeachers, String description, String nameDanish, String nameEnglish, String studyProgramme, String mandatory, String ECTS, String language, LocalCourse localCourse)
     {
         this.id = id;
         this.semester = semester;
@@ -136,11 +136,11 @@ public class Course
     @Min(value = 0, message = "must be equal to or greater than 0")
     @Max(value = 30, message = "must be equal to or less than 10")
     @JsonProperty("ects")
-    public int getECTS()
+    public String getECTS()
     {
         return ECTS;
     }
-    public void setECTS(int ECTS)
+    public void setECTS(String ECTS)
     {
         this.ECTS = ECTS;
     }

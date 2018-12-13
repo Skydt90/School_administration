@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Details</title>
+    <link href="/CSS/kartotek_style.css" rel="stylesheet">
+</head>
+<body>
+    <th:block th:include="_navigation"></th:block>
+
+    <div class="container">
+        <header>
+            <h1>Admin Details</h1>
+        </header>
+
+        <section>
+            <br>
+            <div class="container1">
+                <p><strong>Username:</strong></p>
+                <p th:text="${user.username}"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>User Type:</strong></p>
+                <p th:text="${user.userType.userType}"></p>
+            </div>
+            <br>
+        </section>
+        <br>
+        <br>
+        <footer>
+            <th:block th:include="_footer"></th:block>
+        </footer>
+    </div>
+</body>
+</html>

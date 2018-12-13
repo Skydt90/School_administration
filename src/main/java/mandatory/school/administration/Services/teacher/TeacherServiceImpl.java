@@ -27,6 +27,12 @@ public class TeacherServiceImpl implements TeacherService
     }
 
     @Override
+    public Teacher findTeacherByUsername(String username)
+    {
+        return repository.findTeacherByUser_username(username);
+    }
+
+    @Override
     public void editTeacher(Teacher teacher)
     {
         repository.save(teacher);
@@ -60,5 +66,11 @@ public class TeacherServiceImpl implements TeacherService
     public long countTeachers()
     {
         return repository.count();
+    }
+
+    @Override
+    public List<Teacher> getAllTeachersThatIsNotInCourse(int teacherId)
+    {
+        return repository.findAllByTeacherCourses_teacherId(teacherId);
     }
 }

@@ -1,19 +1,24 @@
 package mandatory.school.administration.Controller;
 
+import mandatory.school.administration.Model.UserType;
+import mandatory.school.administration.Services.user.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.security.Principal;
 
 @Controller
 public class HomeController
 {
-    @GetMapping("/home")
-    public String home()
-    {
-        return "/home";
-    }
+    @Autowired
+    UserService userService;
 
     @GetMapping("/")
-    public String homeEmpty()
+    public String emptyHome(){return "/home";}
+
+    @GetMapping("/home")
+    public String home()
     {
         return "/home";
     }

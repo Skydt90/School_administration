@@ -13,6 +13,8 @@ public interface TeacherService
 
     Teacher getOne(int id);
 
+    Teacher findTeacherByUsername(String username);
+
     void editTeacher(Teacher teacher);
 
     void deleteTeacher(Teacher teacher);
@@ -24,4 +26,6 @@ public interface TeacherService
     List<Teacher> getAllByCourseId(int courseId);
 
     long countTeachers();
+
+    List<Teacher> getAllTeachersThatIsNotInCourse(int teacherId);
 }

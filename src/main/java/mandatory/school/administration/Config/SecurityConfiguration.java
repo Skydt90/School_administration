@@ -28,7 +28,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
         http.csrf().disable();
 
         //Free pages
-        http.authorizeRequests().antMatchers("/login", "/logout", "/course/ajaxdetails*", "/fail").permitAll();
+        http.authorizeRequests().antMatchers("/login", "/logout", "/course/ajaxdetails*","/fail").permitAll();
 
         //Can be accessed by all
         http.authorizeRequests().antMatchers("/home", "/", "/course", "/course/details*",
@@ -38,10 +38,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
         http.authorizeRequests().antMatchers("/course/create", "/course/edit").access("hasAnyAuthority('admin','teacher')");
 
         //For admins only
-        http.authorizeRequests().antMatchers("/teacher/*", "/application*", "/course/*").hasAuthority("admin");
+        http.authorizeRequests().antMatchers("/teacher/*", "/application*", "/course/*", "/admin").hasAuthority("admin");
 
         //For student only
         http.authorizeRequests().antMatchers("/student").hasAuthority("student");
+        //Teacher Only
+        http.authorizeRequests().antMatchers("/teacher").hasAuthority("teacher");
 
         //Acces denied page
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/fail");
@@ -49,7 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
         //Login Config
         http.authorizeRequests().and().formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/home")
+                .defaultSuccessUrl("/profile")
                 .failureUrl("/fail")
                 .usernameParameter("username")
                 .passwordParameter("password")

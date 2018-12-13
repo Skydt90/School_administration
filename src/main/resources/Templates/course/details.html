@@ -4,9 +4,117 @@
     <meta charset="UTF-8">
     <title>Course Details</title>
     <link href="/CSS/kartotek_style.css" rel="stylesheet">
+    <script src="https://kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
     <th:block th:include="_navigation"></th:block>
+
+    <script>
+        $(document).ready(function (){
+            $(".popupCloseButton").click(function () {
+                $("#studentsInCourseDiv").hide();
+                $("#teachersInCourseDiv").hide();
+                $("#availableTeachersDiv").hide();
+            });
+            $("#btnStudentsInCourse").click(function () {
+                $("#studentsInCourseDiv").fadeIn("slow");
+            });
+            $("#btnTeachersInCourse").click(function () {
+                $("#teachersInCourseDiv").fadeIn("slow");
+            });
+            $("#btnAvailableTeachers").click(function () {
+                $("#availableTeachersDiv").fadeIn("slow");
+            });
+        });
+    </script>
+
+    <div data-role="popup" id="studentsInCourseDiv" class="modal">
+        <div class="modal-content">
+            <div class="popupCloseButton">&times;</div>
+                <h1>Registered Students</h1>
+                <table class="sortable" id="tableStudents">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Usertype</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="student: ${studentsInCourse}">
+                        <td th:text="${student.name}"></td>
+                        <td th:text="${student.user.username}"></td>
+                        <td th:text="${student.user.userType.userType}"></td>
+
+                        <td>
+                            <a th:if="${isAdmin}" th:href="${'/course/removeStudent?courseId=' + course.id + '&studentId=' + student.id}" type="button" class="btn btn-del btn:hover">Remove</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table><br>
+        </div>
+    </div>
+
+    <div data-role="popup" id="teachersInCourseDiv" class="modal">
+        <div class="modal-content">
+            <div class="popupCloseButton">&times;</div>
+            <h1>Registered Teachers</h1>
+            <p></p>
+            <button th:if="${isAdmin}" id="btnAvailableTeachers" class="btn btn-create btn:hover">Add Teacher</button>
+
+            <p></p>
+            <table class="sortable" id="tableTeachers">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Usertype</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="teacher: ${teachersInCourse}">
+                    <td th:text="${teacher.name}"></td>
+                    <td th:text="${teacher.user.username}"></td>
+                    <td th:text="${teacher.user.userType.userType}"></td>
+                    <td>
+                        <a th:if="${isAdmin}" th:href="${'/course/removeTeacher?courseId=' + course.id + '&teacherId=' + teacher.id}" type="button" class="btn btn-del btn:hover">Remove</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table><br>
+        </div>
+    </div>
+
+    <div th:if="${isAdmin}" data-role="popup" id="availableTeachersDiv" class="modal">
+        <div class="modal-content">
+            <div class="popupCloseButton">&times;</div>
+            <h1>Available Teachers</h1>
+            <p></p>
+            <table class="sortable" id="availableTeachersTable">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Usertype</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="teacher: ${availableTeachers}">
+                    <td th:text="${teacher.name}"></td>
+                    <td th:text="${teacher.user.username}"></td>
+                    <td th:text="${teacher.user.userType.userType}"></td>
+                    <td>
+                        <a th:href="${'/course/addTeacher?courseId=' + course.id + '&teacherId=' + teacher.id}" type="button" class="btn btn-create btn:hover">Add</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table><br>
+        </div>
+    </div>
 
     <div class="container">
         <header>
@@ -16,7 +124,9 @@
         <section>
             <div>
                 <a type="button" href="/course" class="btn btn-del btn:hover">Return</a>
-                <a type="button" th:href="${'/course/edit?courseId=' + course.id}" class="btn btn-ed btn:hover">Edit</a>
+                <a th:if="${isTeacherOrAdmin}"type="button" th:href="${'/course/edit?courseId=' + course.id}" class="btn btn-ed btn:hover">Edit</a>
+                <button id="btnStudentsInCourse" class="btn btn-ed btn:hover">Students</button>
+                <button id="btnTeachersInCourse" class="btn btn-ed btn:hover">Teachers</button>
             </div>
             <br>
             <div class="container1">
@@ -104,60 +214,6 @@
                   <p th:text="${course.localCourse.examForm}"></p>
             </div>
             <br>
-
-            <div>
-                <h1>Registered Students</h1>
-                <table class="sortable" id="tableStudents">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Username</th>
-                        <th>Usertype</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="student: ${students}">
-                        <td th:text="${student.name}"></td>
-                        <td th:text="${student.user.username}"></td>
-                        <td th:text="${student.user.userType.userType}"></td>
-
-                        <td>
-                            <a th:href="${'/student/details?id='+student.id}" type="button" class="btn btn-ed btn:hover">Details</a>
-                            <a th:href="${'/course/removeStudent?courseId=' + course.id + '&studentId=' + student.id}" type="button" class="btn btn-del btn:hover">Remove</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table><br>
-            </div>
-
-            <div>
-                <h1>Registered Teachers</h1>
-                <p></p>
-                <a type="button" href="/course/addTeacher" class="btn btn-create btn:hover">Add</a>
-                <p></p>
-                <table class="sortable" id="tableTeachers">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Username</th>
-                        <th>Usertype</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="teacher: ${teachers}">
-                        <td th:text="${teacher.name}"></td>
-                        <td th:text="${teacher.user.username}"></td>
-                        <td th:text="${teacher.user.userType.userType}"></td>
-                        <td>
-                            <a th:href="${'/teacher/details?id='+teacher.id}" type="button" class="btn btn-ed btn:hover">Details</a>
-                            <a th:href="${'/course/removeTeacher?courseId=' + course.id + '&teacherId=' + teacher.id}" type="button" class="btn btn-del btn:hover">Remove</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table><br>
-            </div>
         </section>
         <footer style="text-align: left">
             <th:block th:include="_footer"></th:block>

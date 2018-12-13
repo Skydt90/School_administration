@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Details</title>
+    <link href="/CSS/kartotek_style.css" rel="stylesheet">
+    <script src="https://kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+    <th:block th:include="_navigation"></th:block>
+
+    <script>
+        $(document).ready(function (){
+            $(".popupCloseButton").click(function () {
+                $("#courses").hide();
+            });
+            $("#btnCourses").click(function () {
+                $("#courses").fadeIn("slow");
+            });
+        });
+    </script>
+
+    <div data-role="popup" id="courses" class="modal">
+        <div class="modal-content">
+            <div class="popupCloseButton">&times;</div>
+            <h1>Courses</h1>
+            <p></p>
+           <table class="sortable">
+                <thead>
+                <tr>
+                    <th>Name Danish</th>
+                    <th>Name English</th>
+                    <th>ECTS</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="course: ${courses}">
+                    <td th:text="${course.nameDanish}"></td>
+                    <td th:text="${course.nameEnglish}"></td>
+                    <td th:text="${course.ECTS}"></td>
+                    <td>
+                        <a th:href="${'/course/details?id='+course.id}" type="button" class="btn btn-ed btn:hover">Details</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Teacher Details</h1>
+        </header>
+
+        <section>
+            <button id="btnCourses" class="btn btn-ed btn:hover">Teaching Courses</button>
+            <br>
+            <p></p>
+            <div class="container1">
+                <p><strong>Danish Name:</strong></p>
+                <p th:text="${teacher.name}"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Username:</strong></p>
+                <p th:text="${teacher.user.username}"></p>
+            </div>
+            <br>
+            <div class="container1">
+                <p><strong>Type:</strong></p>
+                <p th:text="${teacher.user.userType.userType}"></p>
+            </div>
+            <br>
+        </section>
+        <br>
+        <br>
+        <footer>
+            <th:block th:include="_footer"></th:block>
+        </footer>
+    </div>
+</body>
+</html>

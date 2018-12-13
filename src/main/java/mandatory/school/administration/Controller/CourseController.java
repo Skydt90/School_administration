@@ -31,23 +31,29 @@ public class CourseController
     @GetMapping()
     public String overview(Model model)
     {
-        boolean visible = courseService.getIsShowAbleBasedOnAuthority();
+        boolean isTeacherOrAdmin = courseService.getIsTeacherOrAdmin();
         courseService.updateCourses();
         List<Course> courses = courseService.getFullCourses();
         model.addAttribute("courses", courses);
         model.addAttribute("count", courses.size());
         model.addAttribute("course", new Course());
-        model.addAttribute("showable", visible);
+        model.addAttribute("isTeacherOrAdmin", isTeacherOrAdmin);
         return "/course/overview";
     }
 
     @GetMapping("/details")
     public String details(Model model, @RequestParam int id)
     {
+        boolean isTeacherOrAdmin = courseService.getIsTeacherOrAdmin();
+        boolean isAdmin = courseService.getIsAdmin();
         courseService.updateCourses();
+        List<Teacher> teachersInCourse = teacherService.getAllByCourseId(id);
         model.addAttribute("course", courseService.getFullCourseById(id));
-        model.addAttribute("students", studentService.getAllByCourseId(id));
-        model.addAttribute("teachers", teacherService.getAllByCourseId(id));
+        model.addAttribute("studentsInCourse", studentService.getAllByCourseId(id));
+        model.addAttribute("teachersInCourse", teachersInCourse);
+        model.addAttribute("isTeacherOrAdmin", isTeacherOrAdmin);
+        model.addAttribute("isAdmin", isAdmin);
+        model.addAttribute("availableTeachers", courseUtilities.getTeachersThatAreNotInCourse(teacherService.getAllTeachers(), teachersInCourse));
         return "/course/details";
     }
 
@@ -119,20 +125,28 @@ public class CourseController
     @GetMapping("/removeStudent")
     public String removeStudent (@RequestParam int courseId, @RequestParam int studentId)
     {
+        courseService.removeStudentFromCourse(courseId, studentId);
+        return "redirect:/course/details?id=" + courseId;
+    }
+
+    @GetMapping("/addTeacher")
+    public String addTeacher (@RequestParam("courseId") int courseId, @RequestParam("teacherId") int teacherId)
+    {
+        Teacher teacher = teacherService.getOne(teacherId);
         LocalCourse course = courseService.findCourseById(courseId);
-        StudentCourse studentCourse = courseUtilities.getStudentCourseByStudentIdAndCourseId(studentId, courseId, course.getStudentCourses());
-        course.getStudentCourses().remove(studentCourse);
+        TeacherCourse tc = new TeacherCourse();
+        tc.setTeacher(teacher);
+        tc.setCourse(course);
+        course.getTeacherCourses().add(tc);
+        teacherService.editTeacher(teacher);
         courseService.editCourse(course);
         return "redirect:/course/details?id=" + courseId;
     }
 
     @GetMapping("/removeTeacher")
-    public String removeTeacher (@RequestParam int courseId, @RequestParam int teacherId, Model model)
+    public String removeTeacher (@RequestParam int courseId, @RequestParam int teacherId)
     {
-        LocalCourse course = courseService.findCourseById(courseId);
-        TeacherCourse teacherCourse = courseUtilities.getTeacherCourseByTeacherIdAndCourseId(teacherId, courseId, course.getTeacherCourses());
-        course.getTeacherCourses().remove(teacherCourse);
-        courseService.editCourse(course);
+        courseService.removeTeacherFromCourse(courseId, teacherId);
         return "redirect:/course/details?id=" + courseId;
     }
 }

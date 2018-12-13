@@ -3,9 +3,130 @@
     <meta charset="UTF-8">
     <title>Student Details</title>
     <link href="/CSS/kartotek_style.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
     <th:block th:include="_navigation"></th:block>
+
+    <script>
+        $(document).ready(function (){
+            $(".popupCloseButton").click(function () {
+                $("#applyForCourses").hide();
+                $("#enrolledCourses").hide();
+                $("#applications").hide();
+            });
+            $("#btnApplyForCourse").click(function () {
+                $("#applyForCourses").fadeIn("slow");
+            });
+            $("#btnEnrolledCourses").click(function () {
+                $("#enrolledCourses").fadeIn("slow");
+            });
+            $("#btnApplications").click(function () {
+                $("#applications").fadeIn("slow");
+            });
+            $("#inputSearch").on("input", function() {
+                var value = $(this).val().toLowerCase();
+                $("#applyForCourses tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+    <div data-role="popup" id="applyForCourses" class="modal">
+        <div class="modal-content">
+            <div class="popupCloseButton">&times;</div>
+            <h1>Apply for new Course</h1>
+            <p th:text="${'Total amount of new Courses: ' + countNewCourses}"></p>
+            <input id="inputSearch" placeholder="search" type="search" class="form" style="float: right">
+            <br>
+            <p></p>
+            <table class="sortable" id="table">
+                <thead>
+                <tr>
+                    <th>Danish Name</th>
+                    <th>English Name</th>
+                    <th>ECTS Points</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="course: ${newCourses}">
+                    <td th:text="${course.nameDanish}"></td>
+                    <td th:text="${course.nameEnglish}"></td>
+                    <td th:text="${course.ECTS}"></td>
+                    <td>
+                        <a th:href="${'/course/details?id='+course.id}" type="button" class="btn btn-ed btn:hover">Details</a>
+                        <a th:href="${'/student/signup?studentId=' + student.id + '&courseId=' + course.id}" type="button" class="btn btn-create btn:hover">Sign Up</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div data-role="popup" id="enrolledCourses" class="modal">
+        <div class="modal-content">
+            <div class="popupCloseButton">&times;</div>
+            <h1>Enrolled Courses</h1>
+            <p th:text="${'Total amount of Enrolled Courses: ' + countEnrolledCourses}"></p>
+            <table class="sortable" id="tableEnrolledCourses">
+                <thead>
+                <tr>
+                    <th>Name Danish</th>
+                    <th>Name English</th>
+                    <th>ECTS</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="course: ${courses}">
+                    <td th:text="${course.nameDanish}"></td>
+                    <td th:text="${course.nameEnglish}"></td>
+                    <td th:text="${course.ECTS}"></td>
+
+                    <td>
+                        <a th:href="${'/course/details?id='+course.id}" type="button" class="btn btn-ed btn:hover">Details</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table><br>
+        </div>
+    </div>
+
+    <div data-role="popup" id="applications" class="modal">
+        <div class="modal-content">
+            <div class="popupCloseButton">&times;</div>
+            <h1>Applications</h1>
+            <p th:text="${'Total amount of Applications: ' + countApplications}"></p>
+            <table class="sortable" id="tableApplications">
+                <thead>
+                <tr>
+                    <th>Name Danish</th>
+                    <th>Name English</th>
+                    <th>ECTS</th>
+                    <th>Date for Sign Up</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="a: ${applications}">
+                    <td th:text="${a.fullCourse.nameDanish}"></td>
+                    <td th:text="${a.fullCourse.nameEnglish}"></td>
+                    <td th:text="${a.fullCourse.ECTS}"></td>
+                    <td th:text="${a.timestamp}"></td>
+
+                    <td>
+                        <a th:href="${'/application/details?id='+application.id}" type="button" class="btn btn-ed btn:hover">Details</a>
+                        <a th:href="${'/student/removeSignup?studentId=' + student.id + '&courseId=' + a.course.id}" type="button" class="btn btn-del btn:hover">Remove</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table><br>
+        </div>
+    </div>
 
     <div class="container">
         <header>
@@ -14,7 +135,9 @@
 
         <section>
             <div>
-                <a type="button" th:href="${'/student/applyForCourse?studentId=' + student.id}" class="btn btn-details btn:hover">Sign Up for new Course</a>
+                <button id="btnApplyForCourse" class="btn btn-create btn:hover">Apply for new Course</button>
+                <button id="btnEnrolledCourses" class="btn btn-ed btn:hover">Enrolled Courses</button>
+                <button id="btnApplications" class="btn btn-ed btn:hover">Applications</button>
             </div>
             <br>
             <div class="container1">
@@ -32,62 +155,6 @@
                 <p th:text="${student.user.userType.userType}"></p>
             </div>
             <br>
-
-            <div>
-                <h1>Enrolled Courses</h1>
-                <br>
-                <table class="sortable" id="tableEnrolledCourses">
-                    <thead>
-                    <tr>
-                        <th>Name Danish</th>
-                        <th>Name English</th>
-                        <th>ECTS</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="course: ${courses}">
-                        <td th:text="${course.nameDanish}"></td>
-                        <td th:text="${course.nameEnglish}"></td>
-                        <td th:text="${course.ECTS}"></td>
-
-                        <td>
-                            <a th:href="${'/course/details?id='+course.id}" type="button" class="btn btn-ed btn:hover">Details</a>
-                            <a th:href="${'/student/removeStudent?courseId=' + course.id + '&studentId=' + student.id}" type="button" class="btn btn-del btn:hover">Remove</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table><br>
-            </div>
-
-            <div>
-                <h1>Applications</h1>
-                <br>
-                <table class="sortable" id="tableApplications">
-                    <thead>
-                    <tr>
-                        <th>Name Danish</th>
-                        <th>Name English</th>
-                        <th>ECTS</th>
-                        <th>Date for Sign Up</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="a: ${applications}">
-                        <td th:text="${a.fullCourse.nameDanish}"></td>
-                        <td th:text="${a.fullCourse.nameEnglish}"></td>
-                        <td th:text="${a.fullCourse.ECTS}"></td>
-                        <td th:text="${a.timestamp}"></td>
-
-                        <td>
-                            <a th:href="${'/application/details?id='+application.id}" type="button" class="btn btn-ed btn:hover">Details</a>
-                            <a th:href="${'/student/removeSignup?studentId=' + student.id + '&courseId=' + a.course.id}" type="button" class="btn btn-del btn:hover">Remove</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table><br>
-            </div>
         </section>
         <br>
         <br>

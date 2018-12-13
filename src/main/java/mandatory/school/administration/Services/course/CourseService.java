@@ -27,6 +27,8 @@ public interface CourseService
 
     List<LocalCourse> getAllCoursesStudentHasEnrolled(int studentId);
 
+    List<LocalCourse> getAllCoursesTeacherAreTeaching(int teacherId);
+
     List<Course> convertToFullCourses(List<LocalCourse> localCourses);
 
     void updateCourses();
@@ -35,9 +37,11 @@ public interface CourseService
 
     Course getFullCourseById(int id);
 
-    boolean getIsShowAbleBasedOnAuthority();
+    boolean getIsTeacherOrAdmin();
 
-    void removeTeacherFromCourse(int teacherId, int courseId);
+    boolean getIsAdmin();
 
-    void removeStudentFromCourse(int studentid, int courseId);
+    void removeTeacherFromCourse(int courseId, int teacherId);
+
+    void removeStudentFromCourse(int courseId, int studentId);
 }

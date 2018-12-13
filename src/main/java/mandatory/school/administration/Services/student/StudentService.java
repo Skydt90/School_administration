@@ -1,9 +1,7 @@
 package mandatory.school.administration.Services.student;
 
 import mandatory.school.administration.Model.Student;
-
 import java.util.List;
-import java.util.Set;
 
 public interface StudentService
 {

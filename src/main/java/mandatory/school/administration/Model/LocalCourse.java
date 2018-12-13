@@ -140,7 +140,7 @@ public class LocalCourse
         this.examForm = examForm;
     }
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     public Set<TeacherCourse> getTeacherCourses()
     {
         return teacherCourses;
@@ -150,7 +150,7 @@ public class LocalCourse
         this.teacherCourses = teacherCourses;
     }
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     public Set<StudentCourse> getStudentCourses()
     {
         return studentCourses;
@@ -160,7 +160,7 @@ public class LocalCourse
         this.studentCourses = studentCourses;
     }
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     public Set<Application> getApplications()
     {
         return applications;

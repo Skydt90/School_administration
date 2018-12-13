@@ -42,6 +42,12 @@
             $("#btncreate").click(function () {
                 $("#create").fadeIn("slow");
             });
+            $("#inputSearch").on("input", function() {
+                var value = $(this).val().toLowerCase();
+                $("#table tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
         });
     </script>
 
@@ -136,7 +142,7 @@
         </div>
     </div>
 
-    <div th:if="${showable}" id="create" style="display: none" class="modal">
+    <div th:if="${isTeacherOrAdmin}" id="create" style="display: none" class="modal">
         <div class="modal-content">
             <div class="popupCloseButton">&times;</div>
             <form th:action="@{/course/create}" th:object="${course}" method="post">
@@ -219,8 +225,12 @@
             <h1>Course Overview</h1>
         </header>
 
-        <input th:if="${showable}" th:value="Create" type="button" class="btn btn-create btn:hover" id="btncreate">
-        <p th:text="'Total Amount of Courses:' + ' ' + ${count}"></p>
+        <div>
+            <input th:if="${isTeacherOrAdmin}" th:value="Create" type="button" class="btn btn-create btn:hover" id="btncreate">
+            <p th:text="'Total Amount of Courses:' + ' ' + ${count}"></p>
+            <input id="inputSearch" placeholder="search" type="search" class="form" style="float: right">
+        </div>
+        <br>
 
         <p></p>
         <table class="sortable" id="table">

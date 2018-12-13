@@ -62,4 +62,10 @@ public class CourseUtilities
         courses.removeAll(enrolledCourses);
         return courseService.convertToFullCourses(courses);
     }
+
+    public List<Teacher> getTeachersThatAreNotInCourse(List<Teacher> allTeachers, List<Teacher> teachersInCourse)
+    {
+        allTeachers.removeAll(teachersInCourse);
+        return allTeachers;
+    }
 }
