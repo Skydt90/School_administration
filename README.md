@@ -3,7 +3,7 @@
 This repository contains the source code for our final mandatory assignment on the 3. semester in the computer science study programme at KEA. Following is a list of requiredments and a brief description of our solution to those requirements.
 
 # Must-have requirements:
-1: CRUD for course, including a list with students assigned to that course. 
+**1: CRUD for course, including a list with students assigned to that course** 
 
 Everything here is implemented with the exception of the delete part. The entirety of this requirement was solved using an implementation of JPA in Spring Boot with a few custom implementations to make everything work.
 
